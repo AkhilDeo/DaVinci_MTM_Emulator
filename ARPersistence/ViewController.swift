@@ -97,6 +97,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
     }
     
+    //Only for debugging
     func printTransformationRight(_ session: ARSession) {
         let currentTransform = session.currentFrame?.camera.transform
         let x = currentTransform!.columns.3.x
