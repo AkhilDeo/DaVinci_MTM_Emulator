@@ -115,9 +115,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func sendTransformationRight(_ session: ARSession) {
-        //let network = UDPClient(address: cv.ip_address, port: 8080)
         let currentTransform = session.currentFrame?.camera.transform
-        //let network2 = UDPClient(address: cv.ip_address, port: 8080)!
 
         // Variables
         let x = currentTransform!.columns.3.x
@@ -127,7 +125,6 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let pitch = currentAngles!.x
         let yaw = currentAngles!.y
         let roll = currentAngles!.z
-        let gripSlide = gripperSlider.value
 
         
         let xString: String = "x: \(String(describing: x))"
@@ -136,13 +133,21 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let rollString: String = " roll: \(String(describing: roll))"
         let pitchString: String = " pitch: \(String(describing: pitch))"
         let yawString: String = " yaw: \(String(describing: yaw))"
-        let sliderString: String = " slider:  \(String(describing: gripSlide))"
+        let sliderString: String = " slider:  \(String(describing: gripperSlider.value))"
 
-            // Put your code which should be executed with a delay here
         let sendTransform: String = xString + yString + zString + rollString + pitchString + yawString + sliderString
         self.network.send(sendTransform.data(using: .utf8)!)
 
         
+    }
+    
+    func sendTransformationSliderRight(_ session: ARSession) {
+        //let network = UDPClient(address: cv.ip_address, port: 8080)
+        let sliderString: String = "slider:  \(String(describing: gripperSlider.value))"
+
+            // Put your code which should be executed with a delay here
+        let sendTransform: String = sliderString
+        self.network.send(sendTransform.data(using: .utf8)!)
     }
 
     
@@ -152,11 +157,11 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         switch frame.worldMappingStatus {
         case .extending, .mapped:
           //  saveExperienceButton.isEnabled = true
-            printTransformationRight(session)
+            //printTransformationRight(session)
             sendTransformationRight(session)
         default:
             //saveExperienceButton.isEnabled = false
-            print("No idea what to do")
+            sendTransformationSliderRight(session)
 
         }
         statusLabel.text = """
