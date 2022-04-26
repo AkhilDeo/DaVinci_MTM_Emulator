@@ -51,6 +51,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         super.viewDidLoad()
 
         gripperSlider.transform = CGAffineTransform(rotationAngle: (CGFloat.pi / -2))
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -126,6 +127,8 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let pitch = currentAngles!.x
         let yaw = currentAngles!.y
         let roll = currentAngles!.z
+        let gripSlide = gripperSlider.value
+
         
         let xString: String = "x: \(String(describing: x))"
         let yString: String = " y: \(String(describing: y))"
@@ -133,9 +136,10 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let rollString: String = " roll: \(String(describing: roll))"
         let pitchString: String = " pitch: \(String(describing: pitch))"
         let yawString: String = " yaw: \(String(describing: yaw))"
+        let sliderString: String = " slider:  \(String(describing: gripSlide))"
 
             // Put your code which should be executed with a delay here
-        let sendTransform: String = xString + yString + zString + rollString + pitchString + yawString
+        let sendTransform: String = xString + yString + zString + rollString + pitchString + yawString + sliderString
         self.network.send(sendTransform.data(using: .utf8)!)
 
         
