@@ -20,24 +20,31 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBOutlet weak var gripperSlider: UISlider!
     @IBOutlet weak var gripperValLabel: UILabel!
     @IBOutlet weak var cameraButton: RoundedButton!
+    var isCameraBtnPressed: Bool
     var network: UDPClient
     var ip_address: String
 
+    @IBAction func cameraBtnPressed(_ sender: Any) {
+        isCameraBtnPressed = true
+    }
+    
+    @IBAction func cameraBtnReleased(_ sender: Any) {
+        isCameraBtnPressed = false
+    }
     
     init(ip_address: String) {
-        //cv = ContentView()
-       // self.ip_address = ip_address
         self.ip_address = MyVariables.ip_address
         network = UDPClient(address: ip_address, port: 8080)!
+        isCameraBtnPressed = false
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
-        //cv = ContentView()
         self.ip_address = MyVariables.ip_address
         print(ip_address)
         network = UDPClient(address: ip_address, port: 8080)!
-       super.init(coder: aDecoder)
+        isCameraBtnPressed = false
+        super.init(coder: aDecoder)
     }
     
     // MARK: - View Life Cycle
@@ -90,12 +97,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
-
-    // MARK: - ARSessionDelegate
-    
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
-    }
+    // MARK: - transferring/printing world (xyzrpm) values
     
     //Only for debugging
     func printTransformationRight(_ session: ARSession) {
@@ -134,9 +136,10 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let rollString: String = " roll: \(String(describing: roll))"
         let pitchString: String = " pitch: \(String(describing: pitch))"
         let yawString: String = " yaw: \(String(describing: yaw))"
-        let sliderString: String = " slider:  \(String(describing: gripperSlider.value))"
+        let sliderString: String = " slider: \(String(describing: gripperSlider.value))"
+        let cameraBtnStatus: String = " cameraButton: \(String(describing: isCameraBtnPressed))"
 
-        let sendTransform: String = xString + yString + zString + rollString + pitchString + yawString + sliderString
+        let sendTransform: String = xString + yString + zString + rollString + pitchString + yawString + sliderString + cameraBtnStatus
         self.network.send(sendTransform.data(using: .utf8)!)
 
         
@@ -151,6 +154,11 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.network.send(sendTransform.data(using: .utf8)!)
     }
 
+    // MARK: - ARSessionDelegate
+    
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
+    }
     
     /// - Tag: CheckMappingStatus
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
@@ -214,27 +222,6 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {
         return true
     }
-    
-    // MARK: - Persistence: Saving and Loading
-    lazy var mapSaveURL: URL = {
-        do {
-            return try FileManager.default
-                .url(for: .documentDirectory,
-                     in: .userDomainMask,
-                     appropriateFor: nil,
-                     create: true)
-                .appendingPathComponent("map.arexperience")
-        } catch {
-            fatalError("Can't get file save URL: \(error.localizedDescription)")
-        }
-    }()
-    
-
-    // Called opportunistically to verify that map data can be loaded from filesystem.
-    var mapDataFromFile: Data? {
-        return try? Data(contentsOf: mapSaveURL)
-    }
-    
 
 
     // MARK: - AR session management
@@ -263,7 +250,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
              (.normal, .extending):
             message = "Mapped or Extending"
             
-        case (.normal, _) where mapDataFromFile != nil && !isRelocalizingMap:
+        case (.normal, _) where !isRelocalizingMap:
             message = "Move around to map the environment"
 //        case (.normal, _) where mapDataFromFile == nil:
 //            message = "Move around to map the environment."
@@ -279,17 +266,11 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sessionInfoLabel.text = message
         sessionInfoView.isHidden = message.isEmpty
     }
-    
-    // MARK: - Placing AR Content
-    
-    /// - Tag: PlaceObject
-    @IBAction func handleSceneTap(_ sender: UITapGestureRecognizer) {
-        // Disable placing objects when the session is still relocalizing
-            return
-        
-    }
 
 }
+
+
+
 
 class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     // MARK: - IBOutlets

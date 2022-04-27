@@ -143,6 +143,7 @@
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDg-dr-rGP" customClass="RoundedButton" customModule="ARPersistence" customModuleProvider="target">
                                 <rect key="frame" x="64" y="390" width="132" height="82"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="82" id="Hm2-L3-ClE"/>
                                 </constraints>
@@ -150,6 +151,12 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Camera">
                                     <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="cameraBtnPressed:" destination="7dh-A0-qGE" eventType="touchDown" id="1Dc-jX-6Tg"/>
+                                    <action selector="cameraBtnReleased:" destination="7dh-A0-qGE" eventType="touchUpInside" id="NtI-Sb-P7a"/>
+                                    <outletCollection property="gestureRecognizers" destination="0gP-0b-mlo" appends="YES" id="RXd-vk-dXo"/>
+                                    <outletCollection property="gestureRecognizers" destination="0gP-0b-mlo" appends="YES" id="PSe-FE-wl3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="71x-2l-AWw"/>
@@ -206,11 +213,7 @@
                         <outlet property="sessionInfoView" destination="37h-bD-Iyn" id="Svn-Nd-QDc"/>
                     </connections>
                 </customObject>
-                <tapGestureRecognizer id="0gP-0b-mlo">
-                    <connections>
-                        <action selector="handleSceneTap:" destination="7dh-A0-qGE" id="rVD-lF-42A"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="0gP-0b-mlo"/>
             </objects>
             <point key="canvasLocation" x="764" y="-4"/>
         </scene>
