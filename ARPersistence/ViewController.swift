@@ -130,14 +130,14 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let roll = currentAngles!.z
 
         
-        let xString: String = "x: \(String(describing: x))"
-        let yString: String = " y: \(String(describing: y))"
-        let zString: String = " z: \(String(describing: z))"
-        let rollString: String = " roll: \(String(describing: roll))"
-        let pitchString: String = " pitch: \(String(describing: pitch))"
-        let yawString: String = " yaw: \(String(describing: yaw))"
-        let sliderString: String = " slider: \(String(describing: gripperSlider.value))"
-        let cameraBtnStatus: String = " cameraButton: \(String(describing: isCameraBtnPressed))"
+        let xString: String = "{\"x\": \(String(describing: x)),"
+        let yString: String = " \"y\": \(String(describing: y)),"
+        let zString: String = " \"z\": \(String(describing: z)),"
+        let rollString: String = " \"roll\": \(String(describing: roll)),"
+        let pitchString: String = " \"pitch\": \(String(describing: pitch)),"
+        let yawString: String = " \"yaw\": \(String(describing: yaw)),"
+        let sliderString: String = " \"slider\": \(String(describing: gripperSlider.value)),"
+        let cameraBtnStatus: String = " \"cameraButton\": \(String(describing: isCameraBtnPressed))}"
 
         let sendTransform: String = xString + yString + zString + rollString + pitchString + yawString + sliderString + cameraBtnStatus
         self.network.send(sendTransform.data(using: .utf8)!)
@@ -147,7 +147,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     func sendTransformationSliderRight(_ session: ARSession) {
         //let network = UDPClient(address: cv.ip_address, port: 8080)
-        let sliderString: String = "slider:  \(String(describing: gripperSlider.value))"
+        let sliderString: String = "{\"slider\":  \(String(describing: gripperSlider.value))}"
 
             // Put your code which should be executed with a delay here
         let sendTransform: String = sliderString
@@ -547,7 +547,7 @@ class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             let psmright = PSMRight(ip_address: ip_address)
             psmright.ip_address = ip_address
             psmright.network = UDPClient(address: ip_address, port: 8081)!
-            psmright.network.send("Data".data(using: .utf8)!)
+            //psmright.network.send("Data".data(using: .utf8)!)
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PSMRight")
             self.present(nextViewController, animated:true, completion:nil)
         }
