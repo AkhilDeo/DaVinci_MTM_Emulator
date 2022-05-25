@@ -189,9 +189,11 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     func sendTransformationSliderRight(_ session: ARSession) {
         //let network = UDPClient(address: cv.ip_address, port: 8080)
-        let sliderString: String = "{\"slider\":  \(String(describing: gripperSlider.value))}"
-        sendTransform = sliderString
-        self.network.send(sendTransform.data(using: .utf8)!)
+        //stringDict["slider"] = "{\"slider\":  \(String(describing: gripperSlider.value))}"
+//        sendTransform = sliderString
+//        self.network.send(sendTransform.data(using: .utf8)!)
+        self.network.send("{\"slider\":  \(String(describing: gripperSlider.value))}".data(using: .utf8)!)
+
     }
 
     // MARK: - ARSessionDelegate
