@@ -180,9 +180,9 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 //        let yawString: String = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
 //        let sliderString: String = " \"slider\": \(String(describing: gripperSlider.value)),"
 //        let cameraBtnStatus: String = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
-//        sendTransform = (stringDict["x"] + stringDict["y"] + stringDict["z"] + stringDict["roll"] + stringDict["pitch"] + stringDict["yaw"] + stringDict["slider"] + stringDict["cameraBtn"])
+        sendTransform = (stringDict["x"] + stringDict["y"] + stringDict["z"] + stringDict["roll"] + stringDict["pitch"] + stringDict["yaw"] + stringDict["slider"] + stringDict["cameraBtn"])
 //        self.network.send(sendTransform.data(using: .utf8)!)
-        self.network.send((stringDict["x"] + stringDict["y"] + stringDict["z"] + stringDict["roll"] + stringDict["pitch"] + stringDict["yaw"] + stringDict["slider"] + stringDict["cameraBtn"]).data(using: .utf8)!)
+        self.network.send(sendTransform.data(using: .utf8)!)
 
         
     }
