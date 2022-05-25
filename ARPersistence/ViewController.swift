@@ -23,7 +23,13 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var isCameraBtnPressed: Bool
     var network: UDPClient
     var ip_address: String
-
+    var x: Float
+    var y: Float
+    var z: Float
+    var roll: Float
+    var pitch: Float
+    var yaw: Float
+    
     @IBAction func cameraBtnPressed(_ sender: Any) {
         isCameraBtnPressed = true
     }
@@ -36,6 +42,12 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.ip_address = MyVariables.ip_address
         network = UDPClient(address: ip_address, port: 8080)!
         isCameraBtnPressed = false
+        self.x = 0.0
+        self.y = 0.0
+        self.z = 0.0
+        self.roll = 0.0
+        self.pitch = 0.0
+        self.yaw = 0.0
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -44,6 +56,12 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         print(ip_address)
         network = UDPClient(address: ip_address, port: 8080)!
         isCameraBtnPressed = false
+        self.x = 0.0
+        self.y = 0.0
+        self.z = 0.0
+        self.roll = 0.0
+        self.pitch = 0.0
+        self.yaw = 0.0
         super.init(coder: aDecoder)
     }
     
@@ -118,18 +136,12 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func sendTransformationRight(_ session: ARSession) {
-        let currentTransform = session.currentFrame?.camera.transform
-
-        // Variables
-        let x = currentTransform!.columns.3.x
-        let y = currentTransform!.columns.3.y
-        let z = currentTransform!.columns.3.z
-        let currentAngles = session.currentFrame?.camera.eulerAngles
-        let pitch = currentAngles!.x
-        let yaw = currentAngles!.y
-        let roll = currentAngles!.z
-
-        
+        x = (session.currentFrame?.camera.transform)!.columns.3.x
+        y = (session.currentFrame?.camera.transform)!.columns.3.y
+        z = (session.currentFrame?.camera.transform)!.columns.3.z
+        pitch = (session.currentFrame?.camera.eulerAngles)!.x
+        yaw = (session.currentFrame?.camera.eulerAngles)!.y
+        roll = (session.currentFrame?.camera.eulerAngles)!.z
         let xString: String = "{\"x\": \(String(describing: x)),"
         let yString: String = " \"y\": \(String(describing: y)),"
         let zString: String = " \"z\": \(String(describing: z)),"
@@ -137,11 +149,10 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let pitchString: String = " \"pitch\": \(String(describing: pitch)),"
         let yawString: String = " \"yaw\": \(String(describing: yaw)),"
         let sliderString: String = " \"slider\": \(String(describing: gripperSlider.value)),"
-        let cameraBtnStatus: String = " \"cameraButton\": \(String(describing: isCameraBtnPressed))}"
+        let cameraBtnStatus: String = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
 
         let sendTransform: String = xString + yString + zString + rollString + pitchString + yawString + sliderString + cameraBtnStatus
         self.network.send(sendTransform.data(using: .utf8)!)
-
         
     }
     
