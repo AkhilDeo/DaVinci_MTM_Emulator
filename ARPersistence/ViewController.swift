@@ -29,6 +29,8 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var roll: Float
     var pitch: Float
     var yaw: Float
+    var sendTransform: String
+    var stringDict: Dictionary
     
     @IBAction func cameraBtnPressed(_ sender: Any) {
         isCameraBtnPressed = true
@@ -48,6 +50,15 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.roll = 0.0
         self.pitch = 0.0
         self.yaw = 0.0
+        sendTransform = ""
+        stringDict = ["x": "",
+                      "y": "",
+                      "z": "",
+                      "roll": "",
+                      "pitch": "",
+                      "yaw": "",
+                      "slider": "",
+                      "cameraBtn": ""]
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -62,6 +73,15 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.roll = 0.0
         self.pitch = 0.0
         self.yaw = 0.0
+        sendTransform = ""
+        stringDict = ["x": "",
+                      "y": "",
+                      "z": "",
+                      "roll": "",
+                      "pitch": "",
+                      "yaw": "",
+                      "slider": "",
+                      "cameraBtn": ""]
         super.init(coder: aDecoder)
     }
     
@@ -118,50 +138,59 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     // MARK: - transferring/printing world (xyzrpm) values
     
     //Only for debugging
-    func printTransformationRight(_ session: ARSession) {
-        let currentTransform = session.currentFrame?.camera.transform
-        let x = currentTransform!.columns.3.x
-        let y = currentTransform!.columns.3.y
-        let z = currentTransform!.columns.3.z
-        print("x: \(String(describing: x))")
-        print("y: \(String(describing: y))")
-        print("z: \(String(describing: z))")
-        let currentAngles = session.currentFrame?.camera.eulerAngles
-        let pitch = currentAngles!.x
-        let yaw = currentAngles!.y
-        let roll = currentAngles!.z
-        print("roll: \(String(describing: roll))")
-        print("pitch: \(String(describing: pitch))")
-        print("yaw: \(String(describing: yaw))")
-    }
+//    func printTransformationRight(_ session: ARSession) {
+//        let currentTransform = session.currentFrame?.camera.transform
+//        let x = currentTransform!.columns.3.x
+//        let y = currentTransform!.columns.3.y
+//        let z = currentTransform!.columns.3.z
+//        print("x: \(String(describing: x))")
+//        print("y: \(String(describing: y))")
+//        print("z: \(String(describing: z))")
+//        let currentAngles = session.currentFrame?.camera.eulerAngles
+//        let pitch = currentAngles!.x
+//        let yaw = currentAngles!.y
+//        let roll = currentAngles!.z
+//        print("roll: \(String(describing: roll))")
+//        print("pitch: \(String(describing: pitch))")
+//        print("yaw: \(String(describing: yaw))")
+//    }
     
     func sendTransformationRight(_ session: ARSession) {
-        x = (session.currentFrame?.camera.transform)!.columns.3.x
-        y = (session.currentFrame?.camera.transform)!.columns.3.y
-        z = (session.currentFrame?.camera.transform)!.columns.3.z
-        pitch = (session.currentFrame?.camera.eulerAngles)!.x
-        yaw = (session.currentFrame?.camera.eulerAngles)!.y
-        roll = (session.currentFrame?.camera.eulerAngles)!.z
-        let xString: String = "{\"x\": \(String(describing: x)),"
-        let yString: String = " \"y\": \(String(describing: y)),"
-        let zString: String = " \"z\": \(String(describing: z)),"
-        let rollString: String = " \"roll\": \(String(describing: roll)),"
-        let pitchString: String = " \"pitch\": \(String(describing: pitch)),"
-        let yawString: String = " \"yaw\": \(String(describing: yaw)),"
-        let sliderString: String = " \"slider\": \(String(describing: gripperSlider.value)),"
-        let cameraBtnStatus: String = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
+//        x = (session.currentFrame?.camera.transform)!.columns.3.x
+//        y = (session.currentFrame?.camera.transform)!.columns.3.y
+//        z = (session.currentFrame?.camera.transform)!.columns.3.z
+//        pitch = (session.currentFrame?.camera.eulerAngles)!.x
+//        yaw = (session.currentFrame?.camera.eulerAngles)!.y
+//        roll = (session.currentFrame?.camera.eulerAngles)!.z
+        
+        stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
+        stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
+        stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
+        stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
+        stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
+        stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
+        stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
+        stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
+//
+//        let xString: String = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
+//        let yString: String = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
+//        let zString: String = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
+//        let rollString: String = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
+//        let pitchString: String = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
+//        let yawString: String = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
+//        let sliderString: String = " \"slider\": \(String(describing: gripperSlider.value)),"
+//        let cameraBtnStatus: String = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
+//        sendTransform = (stringDict["x"] + stringDict["y"] + stringDict["z"] + stringDict["roll"] + stringDict["pitch"] + stringDict["yaw"] + stringDict["slider"] + stringDict["cameraBtn"])
+//        self.network.send(sendTransform.data(using: .utf8)!)
+        self.network.send((stringDict["x"] + stringDict["y"] + stringDict["z"] + stringDict["roll"] + stringDict["pitch"] + stringDict["yaw"] + stringDict["slider"] + stringDict["cameraBtn"]).data(using: .utf8)!)
 
-        let sendTransform: String = xString + yString + zString + rollString + pitchString + yawString + sliderString + cameraBtnStatus
-        self.network.send(sendTransform.data(using: .utf8)!)
         
     }
     
     func sendTransformationSliderRight(_ session: ARSession) {
         //let network = UDPClient(address: cv.ip_address, port: 8080)
         let sliderString: String = "{\"slider\":  \(String(describing: gripperSlider.value))}"
-
-            // Put your code which should be executed with a delay here
-        let sendTransform: String = sliderString
+        sendTransform = sliderString
         self.network.send(sendTransform.data(using: .utf8)!)
     }
 
