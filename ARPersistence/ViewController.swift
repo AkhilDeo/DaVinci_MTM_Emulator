@@ -23,14 +23,8 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var isCameraBtnPressed: Bool
     var network: UDPClient
     var ip_address: String
-    var x: Float
-    var y: Float
-    var z: Float
-    var roll: Float
-    var pitch: Float
-    var yaw: Float
     var sendTransform: String
-    var stringDict: Dictionary
+    var stringDict: Dictionary<String, String>
     
     @IBAction func cameraBtnPressed(_ sender: Any) {
         isCameraBtnPressed = true
@@ -44,12 +38,6 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.ip_address = MyVariables.ip_address
         network = UDPClient(address: ip_address, port: 8080)!
         isCameraBtnPressed = false
-        self.x = 0.0
-        self.y = 0.0
-        self.z = 0.0
-        self.roll = 0.0
-        self.pitch = 0.0
-        self.yaw = 0.0
         sendTransform = ""
         stringDict = ["x": "",
                       "y": "",
@@ -67,12 +55,6 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         print(ip_address)
         network = UDPClient(address: ip_address, port: 8080)!
         isCameraBtnPressed = false
-        self.x = 0.0
-        self.y = 0.0
-        self.z = 0.0
-        self.roll = 0.0
-        self.pitch = 0.0
-        self.yaw = 0.0
         sendTransform = ""
         stringDict = ["x": "",
                       "y": "",
@@ -119,7 +101,6 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.run(defaultConfiguration)
         
         sceneView.debugOptions = [ .showFeaturePoints ]
-        //network = UDPClient(address: cv.ip_address, port: 8080)!
 
         
         // Prevent the screen from being dimmed after a while as users will likely
@@ -135,7 +116,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
-    // MARK: - transferring/printing world (xyzrpm) values
+    // MARK: - transferring/printing world (xyz rpm) values
     
     //Only for debugging
 //    func printTransformationRight(_ session: ARSession) {
@@ -166,9 +147,9 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
         stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
         stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
-        stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
+        stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
         stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
-        stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
+        stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
         stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
         stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
 //
@@ -180,7 +161,8 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 //        let yawString: String = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
 //        let sliderString: String = " \"slider\": \(String(describing: gripperSlider.value)),"
 //        let cameraBtnStatus: String = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
-        sendTransform = (stringDict["x"] + stringDict["y"] + stringDict["z"] + stringDict["roll"] + stringDict["pitch"] + stringDict["yaw"] + stringDict["slider"] + stringDict["cameraBtn"])
+        sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]!)
+        //print(sendTransform)
 //        self.network.send(sendTransform.data(using: .utf8)!)
         self.network.send(sendTransform.data(using: .utf8)!)
 
@@ -392,8 +374,8 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         print("z: \(String(describing: z))")
         let currentAngles = session.currentFrame?.camera.eulerAngles
         let pitch = currentAngles?.x
-        let yaw = currentAngles?.y
-        let roll = currentAngles?.z
+        let roll = currentAngles?.y
+        let yaw = currentAngles?.z
         print("roll: \(String(describing: roll))")
         print("pitch: \(String(describing: pitch))")
         print("yaw: \(String(describing: yaw))")
