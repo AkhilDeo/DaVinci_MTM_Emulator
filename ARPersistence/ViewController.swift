@@ -119,31 +119,24 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     // MARK: - transferring/printing world (xyz rpm) values
     
     //Only for debugging
-//    func printTransformationRight(_ session: ARSession) {
-//        let currentTransform = session.currentFrame?.camera.transform
-//        let x = currentTransform!.columns.3.x
-//        let y = currentTransform!.columns.3.y
-//        let z = currentTransform!.columns.3.z
-//        print("x: \(String(describing: x))")
-//        print("y: \(String(describing: y))")
-//        print("z: \(String(describing: z))")
-//        let currentAngles = session.currentFrame?.camera.eulerAngles
-//        let pitch = currentAngles!.x
-//        let yaw = currentAngles!.y
-//        let roll = currentAngles!.z
-//        print("roll: \(String(describing: roll))")
-//        print("pitch: \(String(describing: pitch))")
-//        print("yaw: \(String(describing: yaw))")
-//    }
+    func printTransformationRight(_ session: ARSession) {
+        let currentTransform = session.currentFrame?.camera.transform
+        let x = currentTransform!.columns.3.x
+        let y = currentTransform!.columns.3.y
+        let z = currentTransform!.columns.3.z
+        print("x: \(String(describing: x))")
+        print("y: \(String(describing: y))")
+        print("z: \(String(describing: z))")
+        let currentAngles = session.currentFrame?.camera.eulerAngles
+        let pitch = currentAngles!.x
+        let yaw = currentAngles!.y
+        let roll = currentAngles!.z
+        print("roll: \(String(describing: roll))")
+        print("pitch: \(String(describing: pitch))")
+        print("yaw: \(String(describing: yaw))")
+    }
     
     func sendTransformationRight(_ session: ARSession) {
-//        x = (session.currentFrame?.camera.transform)!.columns.3.x
-//        y = (session.currentFrame?.camera.transform)!.columns.3.y
-//        z = (session.currentFrame?.camera.transform)!.columns.3.z
-//        pitch = (session.currentFrame?.camera.eulerAngles)!.x
-//        yaw = (session.currentFrame?.camera.eulerAngles)!.y
-//        roll = (session.currentFrame?.camera.eulerAngles)!.z
-        
         stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
         stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
         stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
@@ -152,18 +145,8 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
         stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
         stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
-//
-//        let xString: String = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
-//        let yString: String = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
-//        let zString: String = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
-//        let rollString: String = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
-//        let pitchString: String = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
-//        let yawString: String = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
-//        let sliderString: String = " \"slider\": \(String(describing: gripperSlider.value)),"
-//        let cameraBtnStatus: String = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
         sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]!)
-        //print(sendTransform)
-//        self.network.send(sendTransform.data(using: .utf8)!)
+        print(sendTransform)
         self.network.send(sendTransform.data(using: .utf8)!)
 
         
