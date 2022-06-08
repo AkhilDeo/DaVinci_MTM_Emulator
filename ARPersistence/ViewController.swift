@@ -146,17 +146,13 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
         stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
         sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]!)
-        print(sendTransform)
+//        print(sendTransform)
         self.network.send(sendTransform.data(using: .utf8)!)
 
         
     }
     
     func sendTransformationSliderRight(_ session: ARSession) {
-        //let network = UDPClient(address: cv.ip_address, port: 8080)
-        //stringDict["slider"] = "{\"slider\":  \(String(describing: gripperSlider.value))}"
-//        sendTransform = sliderString
-//        self.network.send(sendTransform.data(using: .utf8)!)
         self.network.send("{\"slider\":  \(String(describing: gripperSlider.value))}".data(using: .utf8)!)
 
     }
