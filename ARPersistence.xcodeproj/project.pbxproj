@@ -19,7 +19,6 @@
 		84ABEA0A1F3D15E70052D547 /* Assets.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 84ABEA091F3D15E70052D547 /* Assets.scnassets */; };
 		9E45031C2806813F0073014B /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E45031B2806813F0073014B /* UDPClient.swift */; };
 		9E45031E280688460073014B /* VerticalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E45031D280688460073014B /* VerticalSlider.swift */; };
-		9E4503202807282D0073014B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E45031F2807282D0073014B /* ContentView.swift */; };
 		9EFC8859280CCB9B00DF867F /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EFC8858280CCB9B00DF867F /* ExternalAccessory.framework */; };
 		9EFC885D2811063500DF867F /* IPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFC885C2811063500DF867F /* IPAddress.swift */; };
 /* End PBXBuildFile section */
@@ -40,7 +39,6 @@
 		84ABEA091F3D15E70052D547 /* Assets.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Assets.scnassets; sourceTree = "<group>"; };
 		9E45031B2806813F0073014B /* UDPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClient.swift; sourceTree = "<group>"; };
 		9E45031D280688460073014B /* VerticalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalSlider.swift; sourceTree = "<group>"; };
-		9E45031F2807282D0073014B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9EFC8856280CCB9200DF867F /* ARPersistence.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ARPersistence.entitlements; sourceTree = "<group>"; };
 		9EFC8858280CCB9B00DF867F /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		9EFC885C2811063500DF867F /* IPAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddress.swift; sourceTree = "<group>"; };
@@ -93,7 +91,6 @@
 				9EFC8856280CCB9200DF867F /* ARPersistence.entitlements */,
 				842316E31F2030C300D189D1 /* ViewController.swift */,
 				9EFC885C2811063500DF867F /* IPAddress.swift */,
-				9E45031F2807282D0073014B /* ContentView.swift */,
 				9E45031B2806813F0073014B /* UDPClient.swift */,
 				5CB92B4E20D852B0004D38D8 /* SnapshotAnchor.swift */,
 				11E97209209A355F006E3D26 /* Utilities.swift */,
@@ -202,7 +199,6 @@
 			files = (
 				9E45031C2806813F0073014B /* UDPClient.swift in Sources */,
 				9E45031E280688460073014B /* VerticalSlider.swift in Sources */,
-				9E4503202807282D0073014B /* ContentView.swift in Sources */,
 				11E9720A209A355F006E3D26 /* Utilities.swift in Sources */,
 				5CB92B4F20D852B0004D38D8 /* SnapshotAnchor.swift in Sources */,
 				9EFC885D2811063500DF867F /* IPAddress.swift in Sources */,
