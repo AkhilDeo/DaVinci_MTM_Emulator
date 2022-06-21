@@ -51,15 +51,11 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             """) // For details, see https://developer.apple.com/documentation/arkit
         }
         
-        if (MyVariables.sceneViewExists == false) {
-            // Start the view's AR session.
-            sceneView.session.delegate = self
-            sceneView.session.run(defaultConfiguration)
+        // Start the view's AR session.
+        sceneView.session.delegate = self
+        sceneView.session.run(defaultConfiguration)
             
-            sceneView.debugOptions = [ .showFeaturePoints ]
-        } else {
-            sceneView = MyVariables.sceneView
-        }
+        sceneView.debugOptions = [ .showFeaturePoints ]
 
         
         // Prevent the screen from being dimmed after a while as users will likely
@@ -70,10 +66,6 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        MyVariables.sceneView = sceneView
-        if (MyVariables.sceneViewExists == false) {
-            MyVariables.sceneViewExists = true
-        }
         // Pause the view's AR session.
         sceneView.session.pause()
     }

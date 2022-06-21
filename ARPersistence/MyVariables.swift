@@ -12,6 +12,4 @@ import SceneKit
 
 struct MyVariables {
     static var ip_address = "0.0.0.0"
-    static var sceneView: ARSCNView!
-    static var sceneViewExists: Bool = false
 }
