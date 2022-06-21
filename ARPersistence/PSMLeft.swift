@@ -52,6 +52,7 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         super.init(nibName: nil, bundle: nil)
     }
 
+
     required init?(coder aDecoder: NSCoder) {
         self.ip_address = MyVariables.ip_address
         self.network = MyVariables.network!
@@ -139,16 +140,16 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func sendTransformationLeft(_ session: ARSession) {
-        stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
-        stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
-        stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
-        stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
-        stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
-        stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
-        stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
-        stringDict["clutchBtn"] = " \"clutchBtn\": \(String(describing: isClutchBtnPressed)),"
-        stringDict["arm"] = " \"arm\": \"left\"}"
-        sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["clutchBtn"]! + stringDict["arm"]!)
+        self.stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
+        self.stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
+        self.stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
+        self.stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
+        self.stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
+        self.stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
+        self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
+        self.stringDict["clutchBtn"] = " \"clutchBtn\": \(String(describing: isClutchBtnPressed)),"
+        self.stringDict["arm"] = " \"arm\": \"left\"}"
+        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["clutchBtn"]! + stringDict["arm"]!)
 //        print(sendTransform)
         self.network.send(sendTransform.data(using: .utf8)!)
     }

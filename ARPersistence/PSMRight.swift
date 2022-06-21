@@ -136,16 +136,16 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func sendTransformationRight(_ session: ARSession) {
-        stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
-        stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
-        stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
-        stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
-        stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
-        stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
-        stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
-        stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed)),"
-        stringDict["arm"] = " \"arm\": \"right\"}"
-        sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]! + stringDict["arm"]!)
+        self.stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
+        self.stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
+        self.stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
+        self.stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
+        self.stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
+        self.stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
+        self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
+        self.stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed)),"
+        self.stringDict["arm"] = " \"arm\": \"right\"}"
+        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]! + stringDict["arm"]!)
 //        print(sendTransform)
         self.network.send(sendTransform.data(using: .utf8)!)
     }
