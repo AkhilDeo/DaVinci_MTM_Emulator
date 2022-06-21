@@ -21,6 +21,54 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBOutlet weak var gripperSlider: UISlider!
     @IBOutlet weak var gripperValLabel: UILabel!
     @IBOutlet weak var clutchButton: RoundedButton!
+    var isClutchBtnPressed: Bool
+    var network: UDPClient
+    var ip_address: String
+    var sendTransform: String
+    var stringDict: Dictionary<String, String>
+    
+    @IBAction func clutchBtnPressed(_ sender: Any) {
+        isClutchBtnPressed = true
+    }
+    
+    @IBAction func clutchBtnReleased(_ sender: Any) {
+        isClutchBtnPressed = false
+    }
+    
+    init(ip_address: String) {
+        self.ip_address = MyVariables.ip_address
+        self.network = MyVariables.network!
+        self.isClutchBtnPressed = false
+        self.sendTransform = ""
+        self.stringDict = ["x": "",
+                      "y": "",
+                      "z": "",
+                      "roll": "",
+                      "pitch": "",
+                      "yaw": "",
+                      "slider": "",
+                      "clutchBtn": "",
+                      "arm": ""]
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        self.ip_address = MyVariables.ip_address
+        self.network = MyVariables.network!
+        self.isClutchBtnPressed = false
+        self.sendTransform = ""
+        self.stringDict = ["x": "",
+                      "y": "",
+                      "z": "",
+                      "roll": "",
+                      "pitch": "",
+                      "yaw": "",
+                      "slider": "",
+                      "clutchBtn": "",
+                      "arm": ""]
+        super.init(coder: aDecoder)
+    }
+    
     // MARK: - View Life Cycle
 
     
@@ -70,60 +118,51 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
-
-    // MARK: - ARSessionDelegate
+    // MARK: - transferring/printing world (xyz rpm) values
     
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
-    }
-    
-    func printTransformation(_ session: ARSession) {
+    //Only for debugging
+    func printTransformationLeft(_ session: ARSession) {
         let currentTransform = session.currentFrame?.camera.transform
-        let x = currentTransform?.columns.3.x
-        let y = currentTransform?.columns.3.y
-        let z = currentTransform?.columns.3.z
+        let x = currentTransform!.columns.3.x
+        let y = currentTransform!.columns.3.y
+        let z = currentTransform!.columns.3.z
         print("x: \(String(describing: x))")
         print("y: \(String(describing: y))")
         print("z: \(String(describing: z))")
         let currentAngles = session.currentFrame?.camera.eulerAngles
-        let pitch = currentAngles?.x
-        let roll = currentAngles?.y
-        let yaw = currentAngles?.z
+        let pitch = currentAngles!.x
+        let yaw = currentAngles!.y
+        let roll = currentAngles!.z
         print("roll: \(String(describing: roll))")
         print("pitch: \(String(describing: pitch))")
         print("yaw: \(String(describing: yaw))")
     }
     
+    func sendTransformationLeft(_ session: ARSession) {
+        stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
+        stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
+        stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
+        stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
+        stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
+        stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
+        stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
+        stringDict["clutchBtn"] = " \"clutchBtn\": \(String(describing: isClutchBtnPressed)),"
+        stringDict["arm"] = " \"arm\": \"left\"}"
+        sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["clutchBtn"]! + stringDict["arm"]!)
+//        print(sendTransform)
+        self.network.send(sendTransform.data(using: .utf8)!)
+    }
     
-    func sendTransformation(_ session: ARSession) {
-       // let cv = ContentView()
-        //let network = UDPClient(address: cv.ip_address, port: 8080)
-        let currentTransform = session.currentFrame?.camera.transform
-        
-        // Variables
-        let x = currentTransform?.columns.3.x
-        let y = currentTransform?.columns.3.y
-        let z = currentTransform?.columns.3.z
-        let currentAngles = session.currentFrame?.camera.eulerAngles
-        let pitch = currentAngles?.x
-        let yaw = currentAngles?.y
-        let roll = currentAngles?.z
-        
-        let xString = "x: \(String(describing: x))"
-        let yString = " y: \(String(describing: y))"
-        let zString = " z: \(String(describing: z))"
-        let rollString = " roll: \(String(describing: roll))"
-        let pitchString = " pitch: \(String(describing: pitch))"
-        let yawString = " yaw: \(String(describing: yaw))"
-
-            // Put your code which should be executed with a delay here
-            let sendTransform = xString + yString + zString + rollString + pitchString + yawString
-        //network?.send(sendTransform.data(using: .utf8)!)
-        //network?.close()
-
-        
+    func sendTransformationSliderLeft(_ session: ARSession) {
+        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"arm\": \"left\"}").data(using: .utf8)!)
     }
 
+    
+    // MARK: - ARSessionDelegate
+    
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
+    }
     
     /// - Tag: CheckMappingStatus
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
@@ -132,13 +171,10 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         switch frame.worldMappingStatus {
         case .extending, .mapped:
           //  saveExperienceButton.isEnabled = true
-            printTransformation(session)
-            sendTransformation(session)
+            sendTransformationLeft(session)
             
         default:
-            //saveExperienceButton.isEnabled = false
-            //print("")
-            print("Map not good rn")
+            sendTransformationSliderLeft(session)
 
         }
         statusLabel.text = """
@@ -147,11 +183,6 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         """
         gripperValLabel.text = ("Gripper Value: \(String(describing: round(gripperSlider.value * 1000) / 10) + "%")")
         updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
-    }
-    
-    @available(iOS 13.0, *)
-    func session(_ session: ARSession, didOutputCollaborationData data: ARSession.CollaborationData) {
-        
     }
     
     // MARK: - ARSessionObserver
@@ -202,9 +233,6 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     var defaultConfiguration: ARWorldTrackingConfiguration {
         let configuration = ARWorldTrackingConfiguration()
-        if #available(iOS 13.0, *) {
-            configuration.isCollaborationEnabled = true
-        }
         configuration.planeDetection = .horizontal
         configuration.environmentTexturing = .automatic
         return configuration
@@ -238,14 +266,5 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         sessionInfoLabel.text = message
         sessionInfoView.isHidden = message.isEmpty
-    }
-    
-    // MARK: - Placing AR Content
-    
-    /// - Tag: PlaceObject
-    @IBAction func handleSceneTap(_ sender: UITapGestureRecognizer) {
-        // Disable placing objects when the session is still relocalizing
-            return
-        
     }
 }

@@ -37,10 +37,10 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     init(ip_address: String) {
         self.ip_address = MyVariables.ip_address
-        network = UDPClient(address: ip_address, port: 8080)!
-        isCameraBtnPressed = false
-        sendTransform = ""
-        stringDict = ["x": "",
+        self.network = MyVariables.network!
+        self.isCameraBtnPressed = false
+        self.sendTransform = ""
+        self.stringDict = ["x": "",
                       "y": "",
                       "z": "",
                       "roll": "",
@@ -54,11 +54,10 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     required init?(coder aDecoder: NSCoder) {
         self.ip_address = MyVariables.ip_address
-        print(ip_address)
-        network = UDPClient(address: ip_address, port: 8080)!
-        isCameraBtnPressed = false
-        sendTransform = ""
-        stringDict = ["x": "",
+        self.network = MyVariables.network!
+        self.isCameraBtnPressed = false
+        self.sendTransform = ""
+        self.stringDict = ["x": "",
                       "y": "",
                       "z": "",
                       "roll": "",
@@ -144,17 +143,15 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
         stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
         stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
-        stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed))}"
-        sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]!)
+        stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed)),"
+        stringDict["arm"] = " \"arm\": \"right\"}"
+        sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]! + stringDict["arm"]!)
 //        print(sendTransform)
         self.network.send(sendTransform.data(using: .utf8)!)
-
-        
     }
     
     func sendTransformationSliderRight(_ session: ARSession) {
-        self.network.send("{\"slider\":  \(String(describing: gripperSlider.value))}".data(using: .utf8)!)
-
+        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"arm\": \"right\"}").data(using: .utf8)!)
     }
 
     // MARK: - ARSessionDelegate

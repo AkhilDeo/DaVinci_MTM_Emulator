@@ -12,4 +12,5 @@ import SceneKit
 
 struct MyVariables {
     static var ip_address = "0.0.0.0"
+    static var network: UDPClient? = nil
 }

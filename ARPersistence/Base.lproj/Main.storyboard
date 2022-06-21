@@ -306,7 +306,6 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outlet property="delegate" destination="ieJ-Cl-IRO" id="FYl-nz-3dH"/>
-                                    <outletCollection property="gestureRecognizers" destination="LRN-MI-yQK" appends="YES" id="sCh-ra-dNm"/>
                                 </connections>
                             </arscnView>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GUi-ww-TDJ">
@@ -359,11 +358,11 @@
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5qP-eZ-P98" userLabel="Mapping Status View">
                                 <rect key="frame" x="160" y="60" width="93.5" height="97.5"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="3uc-VU-Rcg">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="97"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="93.5" height="97.5"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mapping: Limited Tracking: Initializing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7M-Jt-wru">
-                                            <rect key="frame" x="8" y="8" width="78" height="81"/>
+                                            <rect key="frame" x="8" y="8" width="77" height="81"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -403,6 +402,10 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Clutch">
                                     <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="clutchBtnPressed:" destination="ieJ-Cl-IRO" eventType="touchDown" id="x8R-6Y-gu1"/>
+                                    <action selector="clutchBtnReleased:" destination="ieJ-Cl-IRO" eventType="touchUpInside" id="QTb-rU-YzL"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyM-nV-Zkf" userLabel="Restart Experience Button Icon">
                                 <rect key="frame" x="50" y="60" width="52" height="35"/>
@@ -496,11 +499,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xIk-tX-hMR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="SYD-fR-7Qt" customClass="SCNScene"/>
-                <tapGestureRecognizer id="LRN-MI-yQK">
-                    <connections>
-                        <action selector="handleSceneTap:" destination="ieJ-Cl-IRO" id="1xN-d1-28e"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="LRN-MI-yQK"/>
             </objects>
             <point key="canvasLocation" x="-855.07246376811599" y="-4.0178571428571423"/>
         </scene>
