@@ -66,16 +66,5 @@ class UDPClient {
     
     func send(_ data: Data) {
         self.connection.send(content: data, completion: .idempotent)
-//        self.connection.receiveMessage { data, context, isComplete, error in
-//            guard let data = data else {
-//                print("Error: Received nil Data")
-//                return
-//            }
-//            guard self.delegate != nil else {
-//                print("Error: UDPClient response handler is nil")
-//                return
-//            }
-//            self.delegate?.handleResponse(self, data: data)
-//        }
     }
 }
