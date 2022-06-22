@@ -28,6 +28,10 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var ip_address: String
     var sendTransform: String
     var stringDict: Dictionary<String, String>
+    var clutchOffset: Dictionary<String, Float>
+    var lastValues: Dictionary<String, Float>
+
+
     
     @IBAction func cameraBtnPressed(_ sender: Any) {
         self.isCameraBtnPressed = true
@@ -60,6 +64,18 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                       "slider": "",
                       "cameraBtn": "",
                       "arm": ""]
+        self.clutchOffset = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
+        self.lastValues = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -78,6 +94,18 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                       "slider": "",
                       "cameraBtn": "",
                       "arm": ""]
+        self.clutchOffset = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
+        self.lastValues = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
         super.init(coder: aDecoder)
     }
     
@@ -148,18 +176,39 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func sendTransformationRight(_ session: ARSession) {
-        self.stringDict["x"] = "{\"x\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.x)),"
-        self.stringDict["y"] = " \"y\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.y)),"
-        self.stringDict["z"] = " \"z\": \(String(describing: (session.currentFrame?.camera.transform)!.columns.3.z)),"
-        self.stringDict["roll"] = " \"roll\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.z)),"
-        self.stringDict["pitch"] = " \"pitch\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.x)),"
-        self.stringDict["yaw"] = " \"yaw\": \(String(describing: (session.currentFrame?.camera.eulerAngles)!.y)),"
+        updateLastValues(session)
+        updateStringDict()
+        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]! + stringDict["arm"]!)
+        self.network.send(sendTransform.data(using: .utf8)!)
+    }
+    
+    func updateStringDict() {
+        self.stringDict["x"] = "{\"x\": \(String(describing: self.lastValues["x"]! + self.clutchOffset["x"]!)),"
+        self.stringDict["y"] = " \"y\": \(String(describing: self.lastValues["y"]! + self.clutchOffset["y"]!)),"
+        self.stringDict["z"] = " \"z\": \(String(describing: self.lastValues["z"]! + self.clutchOffset["z"]!)),"
+        self.stringDict["roll"] = " \"roll\": \(String(describing: self.lastValues["roll"]! + self.clutchOffset["roll"]!)),"
+        self.stringDict["pitch"] = " \"pitch\": \(String(describing: self.lastValues["pitch"]! + self.clutchOffset["pitch"]!)),"
+        self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + self.clutchOffset["yaw"]!)),"
         self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
         self.stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed)),"
         self.stringDict["arm"] = " \"arm\": \"right\"}"
-        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]! + stringDict["arm"]!)
-//        print(sendTransform)
-        self.network.send(sendTransform.data(using: .utf8)!)
+    }
+    func updateLastValues(_ session: ARSession) {
+        self.lastValues["x"] = (session.currentFrame?.camera.transform)!.columns.3.x
+        self.lastValues["y"] = (session.currentFrame?.camera.transform)!.columns.3.y
+        self.lastValues["z"] = (session.currentFrame?.camera.transform)!.columns.3.z
+        self.lastValues["roll"] = (session.currentFrame?.camera.eulerAngles)!.z
+        self.lastValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.x
+        self.lastValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.y
+    }
+    
+    func clutchOffsetCalculation(_ session: ARSession) {
+        self.clutchOffset["x"]! += (self.lastValues["x"]! - (session.currentFrame?.camera.transform)!.columns.3.x)
+        self.clutchOffset["y"]! += self.lastValues["y"]! - (session.currentFrame?.camera.transform)!.columns.3.y
+        self.clutchOffset["z"]! += self.lastValues["z"]! - (session.currentFrame?.camera.transform)!.columns.3.z
+        self.clutchOffset["roll"]! += self.lastValues["roll"]! - (session.currentFrame?.camera.eulerAngles)!.z
+        self.clutchOffset["pitch"]! += self.lastValues["pitch"]! - (session.currentFrame?.camera.eulerAngles)!.x
+        self.clutchOffset["yaw"]! += self.lastValues["yaw"]! - (session.currentFrame?.camera.eulerAngles)!.y
     }
     
     func sendTransformationSliderRight(_ session: ARSession) {
@@ -177,14 +226,13 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         // Enable Save button only when the mapping status is good and an object has been placed
         switch frame.worldMappingStatus {
         case .extending, .mapped:
-          //  saveExperienceButton.isEnabled = true
-            //printTransformationRight(session)
-            sendTransformationRight(session)
+            if (!isClutchBtnPressed) {
+                sendTransformationRight(session)
+            } else {
+                clutchOffsetCalculation(session)
+            }
         default:
-            //sendTransformationRight(session)
-            //saveExperienceButton.isEnabled = false
             sendTransformationSliderRight(session)
-
         }
         statusLabel.text = """
         Mapping: \(frame.worldMappingStatus.description)

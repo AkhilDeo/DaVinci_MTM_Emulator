@@ -28,6 +28,7 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var ip_address: String
     var sendTransform: String
     var stringDict: Dictionary<String, String>
+    var clutchOffset: Dictionary<String, Float>
     
     @IBAction func cameraBtnPressed(_ sender: Any) {
         self.isCameraBtnPressed = true
@@ -60,6 +61,12 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                       "slider": "",
                       "clutchBtn": "",
                       "arm": ""]
+        self.clutchOffset = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -79,6 +86,12 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                       "slider": "",
                       "clutchBtn": "",
                       "arm": ""]
+        self.clutchOffset = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
         super.init(coder: aDecoder)
     }
     
