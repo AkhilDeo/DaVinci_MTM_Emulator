@@ -108,7 +108,7 @@
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uZF-S8-SMn" userLabel="Mapping Status View">
                                 <rect key="frame" x="160" y="60" width="94" height="97.5"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uqy-xA-7xQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="97"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="94" height="97.5"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mapping: Limited Tracking: Initializing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aD6-EU-VHg">
@@ -158,6 +158,23 @@
                                     <outletCollection property="gestureRecognizers" destination="0gP-0b-mlo" appends="YES" id="PSe-FE-wl3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jnU-wu-zND" customClass="RoundedButton" customModule="ARPersistence" customModuleProvider="target">
+                                <rect key="frame" x="64" y="580" width="132" height="82"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="132" id="auA-xA-Qzs"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="82" id="gD4-Yl-EeC"/>
+                                    <constraint firstAttribute="height" constant="82" id="ivc-Nm-CcX"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Clutch">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="clutchBtnPressed:" destination="7dh-A0-qGE" eventType="touchDown" id="DJ2-Yt-57I"/>
+                                    <action selector="clutchBtnReleased:" destination="7dh-A0-qGE" eventType="touchUpInside" id="hHd-HQ-A0G"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="71x-2l-AWw"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -173,13 +190,15 @@
                             <constraint firstItem="CGp-GX-p77" firstAttribute="leading" secondItem="71x-2l-AWw" secondAttribute="leading" constant="141" id="JQ2-dM-ODD"/>
                             <constraint firstItem="7n1-lm-7Eq" firstAttribute="centerX" secondItem="loo-cG-myf" secondAttribute="centerX" id="M56-UG-ENc"/>
                             <constraint firstItem="cOo-FY-E3u" firstAttribute="top" secondItem="71x-2l-AWw" secondAttribute="top" constant="16" id="NFi-fW-FC6"/>
-                            <constraint firstItem="37h-bD-Iyn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="71x-2l-AWw" secondAttribute="leading" constant="20" id="O9Z-UY-YPe"/>
+                            <constraint firstItem="jnU-wu-zND" firstAttribute="top" secondItem="DDg-dr-rGP" secondAttribute="bottom" constant="108" id="Npe-wu-HOm"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="loo-cG-myf" secondAttribute="leading" id="UTU-YA-j2I"/>
                             <constraint firstItem="lVB-24-VNJ" firstAttribute="trailing" secondItem="cOo-FY-E3u" secondAttribute="trailing" id="UgA-pt-L90"/>
                             <constraint firstAttribute="trailing" secondItem="cOo-FY-E3u" secondAttribute="trailing" constant="16" id="XaW-Jf-LNj"/>
                             <constraint firstItem="f6U-ce-g4P" firstAttribute="width" secondItem="BrB-h1-WRS" secondAttribute="width" multiplier="0.3" id="XbQ-vH-9Jr"/>
                             <constraint firstItem="f6U-ce-g4P" firstAttribute="height" secondItem="BrB-h1-WRS" secondAttribute="height" multiplier="0.3" id="Yqt-Kg-mvQ"/>
                             <constraint firstItem="71x-2l-AWw" firstAttribute="bottom" secondItem="37h-bD-Iyn" secondAttribute="bottom" constant="48" id="ZRR-DM-MTl"/>
+                            <constraint firstItem="jnU-wu-zND" firstAttribute="leading" secondItem="71x-2l-AWw" secondAttribute="leading" constant="64" id="ZSa-FL-ZYi"/>
+                            <constraint firstItem="71x-2l-AWw" firstAttribute="trailing" secondItem="jnU-wu-zND" secondAttribute="trailing" constant="218" id="b3n-Id-ULy"/>
                             <constraint firstItem="DDg-dr-rGP" firstAttribute="top" secondItem="f6U-ce-g4P" secondAttribute="bottom" constant="61" id="cIM-lI-IR8"/>
                             <constraint firstItem="71x-2l-AWw" firstAttribute="bottom" secondItem="7n1-lm-7Eq" secondAttribute="bottom" constant="40" id="fzR-Xp-aNx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CGp-GX-p77" secondAttribute="trailing" constant="-70.5" id="gKX-E3-0Rp"/>
@@ -198,6 +217,7 @@
                     <navigationItem key="navigationItem" id="X3e-r9-AtR"/>
                     <connections>
                         <outlet property="cameraButton" destination="DDg-dr-rGP" id="esX-9e-4ha"/>
+                        <outlet property="clutchButton" destination="jnU-wu-zND" id="jEX-d6-RLI"/>
                         <outlet property="gripperSlider" destination="CGp-GX-p77" id="cYH-rp-mwH"/>
                         <outlet property="gripperValLabel" destination="cyy-x4-Phd" id="k4z-Ya-RLk"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="sgr-g8-kdG"/>
@@ -297,7 +317,7 @@
         <scene sceneID="F58-nQ-WLu">
             <objects>
                 <viewController storyboardIdentifier="PSMLeft" id="ieJ-Cl-IRO" customClass="PSMLeft" customModule="ARPersistence" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="FKy-za-aGq">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="FKy-za-aGq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -362,7 +382,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mapping: Limited Tracking: Initializing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7M-Jt-wru">
-                                            <rect key="frame" x="8" y="8" width="77" height="81"/>
+                                            <rect key="frame" x="8" y="8" width="77.5" height="81.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -399,12 +419,12 @@
                                     <constraint firstAttribute="height" constant="82" id="315-dg-Eww"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Clutch">
+                                <buttonConfiguration key="configuration" style="filled" title="Camera">
                                     <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="clutchBtnPressed:" destination="ieJ-Cl-IRO" eventType="touchDown" id="x8R-6Y-gu1"/>
-                                    <action selector="clutchBtnReleased:" destination="ieJ-Cl-IRO" eventType="touchUpInside" id="QTb-rU-YzL"/>
+                                    <action selector="cameraBtnPressed:" destination="ieJ-Cl-IRO" eventType="touchDown" id="nEe-bw-Ndc"/>
+                                    <action selector="cameraBtnReleased:" destination="ieJ-Cl-IRO" eventType="touchUpInside" id="jRj-Vu-JPf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyM-nV-Zkf" userLabel="Restart Experience Button Icon">
@@ -451,19 +471,42 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ueE-h3-1hK" customClass="RoundedButton" customModule="ARPersistence" customModuleProvider="target">
+                                <rect key="frame" x="229" y="576" width="131.5" height="82"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="82" id="DCf-R3-0g0"/>
+                                    <constraint firstAttribute="height" constant="82" id="Sqn-mu-MEX"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="82" id="d4b-qb-JWZ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="131.5" id="koz-Oh-FJG"/>
+                                    <constraint firstAttribute="width" constant="131.5" id="mb0-jo-aDc"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Clutch">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="clutchBtnPressed:" destination="ieJ-Cl-IRO" eventType="touchDown" id="mtb-ag-Wkc"/>
+                                    <action selector="clutchBtnReleased:" destination="ieJ-Cl-IRO" eventType="touchUpInside" id="DEg-bB-wS3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rl0-uE-8YR"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Q7g-rG-j3n" firstAttribute="top" secondItem="rl0-uE-8YR" secondAttribute="top" constant="16.000000000000014" id="0YZ-ol-XH2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Jh4-zQ-AsN" secondAttribute="trailing" constant="33" id="585-es-Z1s"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ueE-h3-1hK" secondAttribute="trailing" constant="33.5" id="7lm-75-XPc"/>
                             <constraint firstItem="j36-ua-lDH" firstAttribute="trailing" secondItem="FKy-za-aGq" secondAttribute="trailing" id="9Ae-sN-Qvd"/>
                             <constraint firstItem="j36-ua-lDH" firstAttribute="leading" secondItem="FKy-za-aGq" secondAttribute="leading" id="BqX-BP-H6z"/>
                             <constraint firstItem="5qP-eZ-P98" firstAttribute="leading" secondItem="dyM-nV-Zkf" secondAttribute="trailing" constant="58" id="BuF-IB-NAC"/>
                             <constraint firstItem="xxh-5X-ueu" firstAttribute="top" secondItem="dyM-nV-Zkf" secondAttribute="bottom" constant="104" id="DTP-uO-hRU"/>
                             <constraint firstItem="xxh-5X-ueu" firstAttribute="top" secondItem="5qP-eZ-P98" secondAttribute="bottom" constant="41.5" id="Hpi-k4-ol7"/>
+                            <constraint firstAttribute="trailing" secondItem="ueE-h3-1hK" secondAttribute="trailing" constant="53.5" id="K56-NX-oOk"/>
                             <constraint firstItem="Q7g-rG-j3n" firstAttribute="leading" secondItem="xxh-5X-ueu" secondAttribute="trailing" constant="32" id="LgD-bB-CL8"/>
+                            <constraint firstItem="ueE-h3-1hK" firstAttribute="leading" secondItem="FKy-za-aGq" secondAttribute="leadingMargin" constant="209" id="Mvr-eR-1AG"/>
                             <constraint firstItem="pwN-zW-tPP" firstAttribute="top" secondItem="Q7g-rG-j3n" secondAttribute="bottom" constant="104.5" id="OSI-Wd-W4a"/>
+                            <constraint firstItem="ueE-h3-1hK" firstAttribute="leading" secondItem="FKy-za-aGq" secondAttribute="leading" constant="229" id="SCD-Z0-buR"/>
+                            <constraint firstItem="ueE-h3-1hK" firstAttribute="top" secondItem="Jh4-zQ-AsN" secondAttribute="bottom" constant="113" id="Spg-O1-nVM"/>
                             <constraint firstItem="Q7g-rG-j3n" firstAttribute="height" secondItem="j36-ua-lDH" secondAttribute="height" multiplier="0.3" id="ZIv-xu-1lF"/>
                             <constraint firstItem="Q7g-rG-j3n" firstAttribute="leading" secondItem="5qP-eZ-P98" secondAttribute="trailing" constant="16.5" id="Zzp-YN-eUV"/>
                             <constraint firstItem="GUi-ww-TDJ" firstAttribute="leading" secondItem="FKy-za-aGq" secondAttribute="leading" constant="207" id="aSH-Ty-4hE"/>
@@ -483,11 +526,13 @@
                             <constraint firstItem="j36-ua-lDH" firstAttribute="bottom" secondItem="FKy-za-aGq" secondAttribute="bottom" id="uCF-Aa-R2p"/>
                             <constraint firstItem="Q7g-rG-j3n" firstAttribute="leading" secondItem="rl0-uE-8YR" secondAttribute="leading" constant="270" id="ucO-eo-l5I"/>
                             <constraint firstItem="Jh4-zQ-AsN" firstAttribute="top" secondItem="Q7g-rG-j3n" secondAttribute="bottom" constant="52" id="uvh-fc-TMN"/>
+                            <constraint firstItem="ZI0-wt-ttH" firstAttribute="top" secondItem="ueE-h3-1hK" secondAttribute="bottom" constant="118" id="yEi-yb-fd4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bbK-Bm-kH1"/>
                     <connections>
-                        <outlet property="clutchButton" destination="Jh4-zQ-AsN" id="luA-Ag-8OV"/>
+                        <outlet property="cameraButton" destination="Jh4-zQ-AsN" id="86E-dK-yxa"/>
+                        <outlet property="clutchButton" destination="ueE-h3-1hK" id="VWF-Fi-YbS"/>
                         <outlet property="gripperSlider" destination="pwN-zW-tPP" id="tWh-Wp-qFT"/>
                         <outlet property="gripperValLabel" destination="ZVd-rF-bJr" id="6Xo-b9-Jzt"/>
                         <outlet property="sceneView" destination="j36-ua-lDH" id="bAe-Xh-vF0"/>
@@ -509,6 +554,12 @@
             <size key="intrinsicContentSize" width="109" height="44"/>
         </designable>
         <designable name="Jh4-zQ-AsN">
+            <size key="intrinsicContentSize" width="109" height="44"/>
+        </designable>
+        <designable name="jnU-wu-zND">
+            <size key="intrinsicContentSize" width="94.5" height="44"/>
+        </designable>
+        <designable name="ueE-h3-1hK">
             <size key="intrinsicContentSize" width="94.5" height="44"/>
         </designable>
     </designables>

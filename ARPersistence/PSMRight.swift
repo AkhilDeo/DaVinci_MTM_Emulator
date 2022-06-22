@@ -21,24 +21,35 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBOutlet weak var gripperSlider: UISlider!
     @IBOutlet weak var gripperValLabel: UILabel!
     @IBOutlet weak var cameraButton: RoundedButton!
+    @IBOutlet weak var clutchButton: RoundedButton!
     var isCameraBtnPressed: Bool
+    var isClutchBtnPressed: Bool
     var network: UDPClient
     var ip_address: String
     var sendTransform: String
     var stringDict: Dictionary<String, String>
     
     @IBAction func cameraBtnPressed(_ sender: Any) {
-        isCameraBtnPressed = true
+        self.isCameraBtnPressed = true
     }
     
     @IBAction func cameraBtnReleased(_ sender: Any) {
-        isCameraBtnPressed = false
+        self.isCameraBtnPressed = false
+    }
+    
+    @IBAction func clutchBtnPressed(_ sender: Any) {
+        self.isClutchBtnPressed = true
+    }
+    
+    @IBAction func clutchBtnReleased(_ sender: Any) {
+        self.isClutchBtnPressed = false
     }
     
     init(ip_address: String) {
         self.ip_address = MyVariables.ip_address
         self.network = MyVariables.network!
         self.isCameraBtnPressed = false
+        self.isClutchBtnPressed = false
         self.sendTransform = ""
         self.stringDict = ["x": "",
                       "y": "",
@@ -56,6 +67,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.ip_address = MyVariables.ip_address
         self.network = MyVariables.network!
         self.isCameraBtnPressed = false
+        self.isClutchBtnPressed = false
         self.sendTransform = ""
         self.stringDict = ["x": "",
                       "y": "",
@@ -169,6 +181,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             //printTransformationRight(session)
             sendTransformationRight(session)
         default:
+            //sendTransformationRight(session)
             //saveExperienceButton.isEnabled = false
             sendTransformationSliderRight(session)
 

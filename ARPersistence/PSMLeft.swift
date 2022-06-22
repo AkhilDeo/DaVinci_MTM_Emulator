@@ -20,25 +20,36 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBOutlet weak var snapshotThumbnail: UIImageView!
     @IBOutlet weak var gripperSlider: UISlider!
     @IBOutlet weak var gripperValLabel: UILabel!
+    @IBOutlet weak var cameraButton: RoundedButton!
     @IBOutlet weak var clutchButton: RoundedButton!
     var isClutchBtnPressed: Bool
+    var isCameraBtnPressed: Bool
     var network: UDPClient
     var ip_address: String
     var sendTransform: String
     var stringDict: Dictionary<String, String>
     
+    @IBAction func cameraBtnPressed(_ sender: Any) {
+        self.isCameraBtnPressed = true
+    }
+    
+    @IBAction func cameraBtnReleased(_ sender: Any) {
+        self.isCameraBtnPressed = false
+    }
+    
     @IBAction func clutchBtnPressed(_ sender: Any) {
-        isClutchBtnPressed = true
+        self.isClutchBtnPressed = true
     }
     
     @IBAction func clutchBtnReleased(_ sender: Any) {
-        isClutchBtnPressed = false
+        self.isClutchBtnPressed = false
     }
     
     init(ip_address: String) {
         self.ip_address = MyVariables.ip_address
         self.network = MyVariables.network!
         self.isClutchBtnPressed = false
+        self.isCameraBtnPressed = false
         self.sendTransform = ""
         self.stringDict = ["x": "",
                       "y": "",
@@ -57,6 +68,7 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.ip_address = MyVariables.ip_address
         self.network = MyVariables.network!
         self.isClutchBtnPressed = false
+        self.isCameraBtnPressed = false
         self.sendTransform = ""
         self.stringDict = ["x": "",
                       "y": "",
