@@ -206,8 +206,8 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.lastValues["y"] = (session.currentFrame?.camera.transform)!.columns.3.y
         self.lastValues["z"] = (session.currentFrame?.camera.transform)!.columns.3.z
         self.lastValues["roll"] = (session.currentFrame?.camera.eulerAngles)!.z
-        self.lastValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.x
-        self.lastValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.y
+        self.lastValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.y // x used to be here
+        self.lastValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.x // y used to be here
     }
     
     func updateCurValues(_ session: ARSession) {
@@ -215,8 +215,8 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.curValues["y"] = (session.currentFrame?.camera.transform)!.columns.3.y
         self.curValues["z"] = (session.currentFrame?.camera.transform)!.columns.3.z
         self.curValues["roll"] = (session.currentFrame?.camera.eulerAngles)!.z
-        self.curValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.x
-        self.curValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.y
+        self.curValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.y // x used to be here
+        self.curValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.x // y used to be here
     }
     
     func updateStringDict() {
@@ -228,7 +228,7 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + self.clutchOffset["yaw"]!)),"
         self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
         self.stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed)),"
-        self.stringDict["arm"] = " \"arm\": \"right\"}"
+        self.stringDict["arm"] = " \"arm\": \"left\"}"
     }
     
     func clutchOffsetCalculation() {
