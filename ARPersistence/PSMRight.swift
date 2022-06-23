@@ -30,6 +30,8 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var stringDict: Dictionary<String, String>
     var clutchOffset: Dictionary<String, Float>
     var lastValues: Dictionary<String, Float>
+    var curValues: Dictionary<String, Float>
+
 
 
     
@@ -43,10 +45,13 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBAction func clutchBtnPressed(_ sender: Any) {
         self.isClutchBtnPressed = true
+        print("Clutch Pressed")
     }
     
     @IBAction func clutchBtnReleased(_ sender: Any) {
         self.isClutchBtnPressed = false
+        clutchOffsetCalculation()
+        print("Clutch Released")
     }
     
     init(ip_address: String) {
@@ -71,6 +76,12 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                              "pitch": 0.0,
                              "yaw": 0.0 ]
         self.lastValues = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
+        self.curValues = ["x": 0.0,
                              "y": 0.0,
                              "z": 0.0,
                              "roll": 0.0,
@@ -101,6 +112,12 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                              "pitch": 0.0,
                              "yaw": 0.0 ]
         self.lastValues = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
+        self.curValues = ["x": 0.0,
                              "y": 0.0,
                              "z": 0.0,
                              "roll": 0.0,
@@ -202,13 +219,25 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.lastValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.y
     }
     
-    func clutchOffsetCalculation(_ session: ARSession) {
-        self.clutchOffset["x"]! += (self.lastValues["x"]! - (session.currentFrame?.camera.transform)!.columns.3.x)
-        self.clutchOffset["y"]! += self.lastValues["y"]! - (session.currentFrame?.camera.transform)!.columns.3.y
-        self.clutchOffset["z"]! += self.lastValues["z"]! - (session.currentFrame?.camera.transform)!.columns.3.z
-        self.clutchOffset["roll"]! += self.lastValues["roll"]! - (session.currentFrame?.camera.eulerAngles)!.z
-        self.clutchOffset["pitch"]! += self.lastValues["pitch"]! - (session.currentFrame?.camera.eulerAngles)!.x
-        self.clutchOffset["yaw"]! += self.lastValues["yaw"]! - (session.currentFrame?.camera.eulerAngles)!.y
+    func updateCurValues(_ session: ARSession) {
+        self.curValues["x"] = (session.currentFrame?.camera.transform)!.columns.3.x
+        self.curValues["y"] = (session.currentFrame?.camera.transform)!.columns.3.y
+        self.curValues["z"] = (session.currentFrame?.camera.transform)!.columns.3.z
+        self.curValues["roll"] = (session.currentFrame?.camera.eulerAngles)!.z
+        self.curValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.x
+        self.curValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.y
+    }
+    
+    func clutchOffsetCalculation() {
+        self.clutchOffset["x"]! += (self.lastValues["x"]! - self.curValues["x"]!)
+        self.clutchOffset["y"]! += (self.lastValues["y"]! - self.curValues["y"]!)
+        self.clutchOffset["z"]! += (self.lastValues["z"]! - self.curValues["z"]!)
+        self.clutchOffset["roll"]! += (self.lastValues["roll"]! - self.curValues["roll"]!)
+        self.clutchOffset["pitch"]! += (self.lastValues["pitch"]! - self.curValues["pitch"]!)
+        self.clutchOffset["yaw"]! += (self.lastValues["yaw"]! - self.curValues["yaw"]!)
+        print("last values = " + lastValues.description)
+        print("cur values = " + curValues.description)
+        print("clutch offset = " + clutchOffset.description)
     }
     
     func sendTransformationSliderRight(_ session: ARSession) {
@@ -226,11 +255,11 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         // Enable Save button only when the mapping status is good and an object has been placed
         switch frame.worldMappingStatus {
         case .extending, .mapped:
+            updateCurValues(session)
             if (!isClutchBtnPressed) {
                 sendTransformationRight(session)
-            } else {
-                clutchOffsetCalculation(session)
             }
+            
         default:
             sendTransformationSliderRight(session)
         }
