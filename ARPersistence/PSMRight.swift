@@ -28,12 +28,11 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var ip_address: String
     var sendTransform: String
     var stringDict: Dictionary<String, String>
-    var clutchOffset: Dictionary<String, Float>
     var lastValues: Dictionary<String, Float>
     var curValues: Dictionary<String, Float>
 
 
-
+    // for ecm,  joint 1 controls yaw, joint 2 controls pitch, joint 3 controls insertion, and joint 4 controls the roll
     
     @IBAction func cameraBtnPressed(_ sender: Any) {
         self.isCameraBtnPressed = true
@@ -41,17 +40,16 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBAction func cameraBtnReleased(_ sender: Any) {
         self.isCameraBtnPressed = false
+
     }
     
     @IBAction func clutchBtnPressed(_ sender: Any) {
         self.isClutchBtnPressed = true
-        print("Clutch Pressed")
     }
     
     @IBAction func clutchBtnReleased(_ sender: Any) {
         self.isClutchBtnPressed = false
         clutchOffsetCalculation()
-        print("Clutch Released")
     }
     
     init(ip_address: String) {
@@ -67,14 +65,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                       "pitch": "",
                       "yaw": "",
                       "slider": "",
-                      "cameraBtn": "",
                       "arm": ""]
-        self.clutchOffset = ["x": 0.0,
-                             "y": 0.0,
-                             "z": 0.0,
-                             "roll": 0.0,
-                             "pitch": 0.0,
-                             "yaw": 0.0 ]
         self.lastValues = ["x": 0.0,
                              "y": 0.0,
                              "z": 0.0,
@@ -103,14 +94,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                       "pitch": "",
                       "yaw": "",
                       "slider": "",
-                      "cameraBtn": "",
                       "arm": ""]
-        self.clutchOffset = ["x": 0.0,
-                             "y": 0.0,
-                             "z": 0.0,
-                             "roll": 0.0,
-                             "pitch": 0.0,
-                             "yaw": 0.0 ]
         self.lastValues = ["x": 0.0,
                              "y": 0.0,
                              "z": 0.0,
@@ -195,19 +179,18 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func sendTransformationRight(_ session: ARSession) {
         updateLastValues(session)
         updateStringDict()
-        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["cameraBtn"]! + stringDict["arm"]!)
+        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["arm"]!)
         self.network.send(sendTransform.data(using: .utf8)!)
     }
-    
+     
     func updateStringDict() {
-        self.stringDict["x"] = "{\"x\": \(String(describing: self.lastValues["x"]! + self.clutchOffset["x"]!)),"
-        self.stringDict["y"] = " \"y\": \(String(describing: self.lastValues["y"]! + self.clutchOffset["y"]!)),"
-        self.stringDict["z"] = " \"z\": \(String(describing: self.lastValues["z"]! + self.clutchOffset["z"]!)),"
-        self.stringDict["roll"] = " \"roll\": \(String(describing: self.lastValues["roll"]! + self.clutchOffset["roll"]!)),"
-        self.stringDict["pitch"] = " \"pitch\": \(String(describing: self.lastValues["pitch"]! + self.clutchOffset["pitch"]!)),"
-        self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + self.clutchOffset["yaw"]!)),"
+        self.stringDict["x"] = "{\"x\": \(String(describing: self.lastValues["x"]! + MyVariables.clutchOffset["x"]!)),"
+        self.stringDict["y"] = " \"y\": \(String(describing: self.lastValues["y"]! + MyVariables.clutchOffset["y"]!)),"
+        self.stringDict["z"] = " \"z\": \(String(describing: self.lastValues["z"]! + MyVariables.clutchOffset["z"]!)),"
+        self.stringDict["roll"] = " \"roll\": \(String(describing: self.lastValues["roll"]! + MyVariables.clutchOffset["roll"]!)),"
+        self.stringDict["pitch"] = " \"pitch\": \(String(describing: self.lastValues["pitch"]! + MyVariables.clutchOffset["pitch"]!)),"
+        self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + MyVariables.clutchOffset["yaw"]!)),"
         self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
-        self.stringDict["cameraBtn"] = " \"cameraBtn\": \(String(describing: isCameraBtnPressed)),"
         self.stringDict["arm"] = " \"arm\": \"right\"}"
     }
     func updateLastValues(_ session: ARSession) {
@@ -229,15 +212,12 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func clutchOffsetCalculation() {
-        self.clutchOffset["x"]! += (self.lastValues["x"]! - self.curValues["x"]!)
-        self.clutchOffset["y"]! += (self.lastValues["y"]! - self.curValues["y"]!)
-        self.clutchOffset["z"]! += (self.lastValues["z"]! - self.curValues["z"]!)
-        self.clutchOffset["roll"]! += (self.lastValues["roll"]! - self.curValues["roll"]!)
-        self.clutchOffset["pitch"]! += (self.lastValues["pitch"]! - self.curValues["pitch"]!)
-        self.clutchOffset["yaw"]! += (self.lastValues["yaw"]! - self.curValues["yaw"]!)
-        print("last values = " + lastValues.description)
-        print("cur values = " + curValues.description)
-        print("clutch offset = " + clutchOffset.description)
+        MyVariables.clutchOffset["x"]! += (self.lastValues["x"]! - self.curValues["x"]!)
+        MyVariables.clutchOffset["y"]! += (self.lastValues["y"]! - self.curValues["y"]!)
+        MyVariables.clutchOffset["z"]! += (self.lastValues["z"]! - self.curValues["z"]!)
+        MyVariables.clutchOffset["roll"]! += (self.lastValues["roll"]! - self.curValues["roll"]!)
+        MyVariables.clutchOffset["pitch"]! += (self.lastValues["pitch"]! - self.curValues["pitch"]!)
+        MyVariables.clutchOffset["yaw"]! += (self.lastValues["yaw"]! - self.curValues["yaw"]!)
     }
     
     func sendTransformationSliderRight(_ session: ARSession) {
@@ -342,9 +322,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             
         case (.normal, _) where !isRelocalizingMap:
             message = "Move around to map the environment"
-//        case (.normal, _) where mapDataFromFile == nil:
-//            message = "Move around to map the environment."
-//
+
         case (.limited(.relocalizing), _) where isRelocalizingMap:
             message = "Move your device to the location shown in the image."
             snapshotThumbnail.isHidden = false
