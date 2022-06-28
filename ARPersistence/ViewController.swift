@@ -18,7 +18,7 @@ class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var ip: ValidIPAddress = ValidIPAddress()
     let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
 
-
+ 
     
     init() {
         self.ip_address = ""
@@ -36,10 +36,6 @@ class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             self.ip_address = ipAddressInput.text ?? "227.215.14.176"
             MyVariables.ip_address = self.ip_address
             MyVariables.network = UDPClient(address: ip_address, port: 8080)
-//            let psmright = PSMRight(ip_address: ip_address)
-//            psmright.ip_address = ip_address
-//            psmright.network = UDPClient(address: ip_address, port: 8081)!
-            //psmright.network.send("Data".data(using: .utf8)!)
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PSMRight")
             self.present(nextViewController, animated:true, completion:nil)
         }

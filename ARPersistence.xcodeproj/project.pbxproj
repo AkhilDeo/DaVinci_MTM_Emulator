@@ -17,6 +17,7 @@
 		842316E71F2030C300D189D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842316E51F2030C300D189D1 /* Main.storyboard */; };
 		842316EC1F2030C300D189D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842316EA1F2030C300D189D1 /* LaunchScreen.storyboard */; };
 		84ABEA0A1F3D15E70052D547 /* Assets.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 84ABEA091F3D15E70052D547 /* Assets.scnassets */; };
+		9E17A530286AB095009016B5 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E17A52F286AB095009016B5 /* HelperFunctions.swift */; };
 		9E312048286215AE00FB27EC /* PSMRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E312047286215AE00FB27EC /* PSMRight.swift */; };
 		9E31204A286216DD00FB27EC /* PSMLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E312049286216DD00FB27EC /* PSMLeft.swift */; };
 		9E31204C2862172100FB27EC /* MyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31204B2862172100FB27EC /* MyVariables.swift */; };
@@ -40,6 +41,7 @@
 		842316EB1F2030C300D189D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		842316ED1F2030C300D189D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84ABEA091F3D15E70052D547 /* Assets.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Assets.scnassets; sourceTree = "<group>"; };
+		9E17A52F286AB095009016B5 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		9E312047286215AE00FB27EC /* PSMRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSMRight.swift; sourceTree = "<group>"; };
 		9E312049286216DD00FB27EC /* PSMLeft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSMLeft.swift; sourceTree = "<group>"; };
 		9E31204B2862172100FB27EC /* MyVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVariables.swift; sourceTree = "<group>"; };
@@ -98,9 +100,10 @@
 				842316E31F2030C300D189D1 /* ViewController.swift */,
 				9E312049286216DD00FB27EC /* PSMLeft.swift */,
 				9E312047286215AE00FB27EC /* PSMRight.swift */,
+				9E31204B2862172100FB27EC /* MyVariables.swift */,
+				9E17A52F286AB095009016B5 /* HelperFunctions.swift */,
 				9EFC885C2811063500DF867F /* IPAddress.swift */,
 				9E45031B2806813F0073014B /* UDPClient.swift */,
-				9E31204B2862172100FB27EC /* MyVariables.swift */,
 				5CB92B4E20D852B0004D38D8 /* SnapshotAnchor.swift */,
 				11E97209209A355F006E3D26 /* Utilities.swift */,
 				842316DF1F2030C300D189D1 /* AppDelegate.swift */,
@@ -211,6 +214,7 @@
 				11E9720A209A355F006E3D26 /* Utilities.swift in Sources */,
 				5CB92B4F20D852B0004D38D8 /* SnapshotAnchor.swift in Sources */,
 				9EFC885D2811063500DF867F /* IPAddress.swift in Sources */,
+				9E17A530286AB095009016B5 /* HelperFunctions.swift in Sources */,
 				9E31204C2862172100FB27EC /* MyVariables.swift in Sources */,
 				111DC86920ACAB690037F7B1 /* RoundedButton.swift in Sources */,
 				842316E41F2030C300D189D1 /* ViewController.swift in Sources */,
