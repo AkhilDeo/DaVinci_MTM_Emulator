@@ -14,7 +14,7 @@ var pitchString: String = ""
 var insertString: String = ""
 var rollString: String = ""
 var insertVal: Float = 0.0
-let cameraString: String = " \"camera\": \"true\"}"
+let cameraString: String = " \"camera\": true}"
 
 // for ecm,  joint 1 controls yaw, joint 2 controls pitch, joint 3 controls insertion, and joint 4 controls the roll
 func sendCameraTransformation(_ priorCurValues: Dictionary<String, Float>, _ curValues: Dictionary<String, Float>) {

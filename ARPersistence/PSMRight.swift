@@ -37,10 +37,13 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBAction func cameraBtnPressed(_ sender: Any) {
         self.isCameraBtnPressed = true
+        print("Camera pressed")
     }
     
     @IBAction func cameraBtnReleased(_ sender: Any) {
         self.isCameraBtnPressed = false
+        print("Camera released")
+
     }
     
     @IBAction func clutchBtnPressed(_ sender: Any) {
@@ -172,7 +175,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         //updateLastValues(session)
         updateValues(session, &(self.lastValues))
         updateStringDict()
-        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["arm"]!)
+        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["camera"]! + stringDict["arm"]!)
         self.network.send(sendTransform.data(using: .utf8)!)
     }
      
@@ -184,6 +187,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.stringDict["pitch"] = " \"pitch\": \(String(describing: self.lastValues["pitch"]! + MyVariables.clutchOffset["pitch"]!)),"
         self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + MyVariables.clutchOffset["yaw"]!)),"
         self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
+        self.stringDict["camera"] = " \"camera\": false,"
         self.stringDict["arm"] = " \"arm\": \"right\"}"
     }
 //    func updateLastValues(_ session: ARSession) {
@@ -206,7 +210,7 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     
     func sendTransformationSliderRight(_ session: ARSession) {
-        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"arm\": \"right\"}").data(using: .utf8)!)
+        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"camera\": false," +  " \"arm\": \"right\"}").data(using: .utf8)!)
     }
 
     // MARK: - ARSessionDelegate
