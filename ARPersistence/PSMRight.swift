@@ -187,30 +187,12 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.stringDict["pitch"] = " \"pitch\": \(String(describing: self.lastValues["pitch"]! + MyVariables.clutchOffset["pitch"]!)),"
         self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + MyVariables.clutchOffset["yaw"]!)),"
         self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
-        self.stringDict["camera"] = " \"camera\": false,"
+        self.stringDict["camera"] = " \"camera\": \"false\","
         self.stringDict["arm"] = " \"arm\": \"right\"}"
     }
-//    func updateLastValues(_ session: ARSession) {
-//        self.lastValues["x"] = (session.currentFrame?.camera.transform)!.columns.3.x
-//        self.lastValues["y"] = (session.currentFrame?.camera.transform)!.columns.3.y
-//        self.lastValues["z"] = (session.currentFrame?.camera.transform)!.columns.3.z
-//        self.lastValues["roll"] = (session.currentFrame?.camera.eulerAngles)!.z
-//        self.lastValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.x
-//        self.lastValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.y
-//    }
-//
-//    func updateCurValues(_ session: ARSession) {
-//        self.curValues["x"] = (session.currentFrame?.camera.transform)!.columns.3.x
-//        self.curValues["y"] = (session.currentFrame?.camera.transform)!.columns.3.y
-//        self.curValues["z"] = (session.currentFrame?.camera.transform)!.columns.3.z
-//        self.curValues["roll"] = (session.currentFrame?.camera.eulerAngles)!.z
-//        self.curValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.x
-//        self.curValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.y
-//    }
-
     
     func sendTransformationSliderRight(_ session: ARSession) {
-        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"camera\": false," +  " \"arm\": \"right\"}").data(using: .utf8)!)
+        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"camera\": \"false\"," +  " \"arm\": \"right\"}").data(using: .utf8)!)
     }
 
     // MARK: - ARSessionDelegate

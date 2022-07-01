@@ -176,23 +176,6 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.network.send(sendTransform.data(using: .utf8)!)
     }
     
-//    func updateLastValues(_ session: ARSession) {
-//        self.lastValues["x"] = (session.currentFrame?.camera.transform)!.columns.3.x
-//        self.lastValues["y"] = (session.currentFrame?.camera.transform)!.columns.3.y
-//        self.lastValues["z"] = (session.currentFrame?.camera.transform)!.columns.3.z
-//        self.lastValues["roll"] = (session.currentFrame?.camera.eulerAngles)!.z
-//        self.lastValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.y
-//        self.lastValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.x
-//    }
-//
-//    func updateCurValues(_ session: ARSession) {
-//        self.curValues["x"] = (session.currentFrame?.camera.transform)!.columns.3.x
-//        self.curValues["y"] = (session.currentFrame?.camera.transform)!.columns.3.y
-//        self.curValues["z"] = (session.currentFrame?.camera.transform)!.columns.3.z
-//        self.curValues["roll"] = (session.currentFrame?.camera.eulerAngles)!.z
-//        self.curValues["pitch"] = (session.currentFrame?.camera.eulerAngles)!.y
-//        self.curValues["yaw"] = (session.currentFrame?.camera.eulerAngles)!.x
-//    }
     
     func updateStringDict() {
         self.stringDict["x"] = "{\"x\": \(String(describing: self.lastValues["x"]! + MyVariables.clutchOffset["x"]!)),"
