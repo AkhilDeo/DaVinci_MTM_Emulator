@@ -172,10 +172,9 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         //updateLastValues(session)
         updateValues(session, &lastValues)
         updateStringDict()
-        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["arm"]!)
+        self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["camera"]! + stringDict["arm"]!)
         self.network.send(sendTransform.data(using: .utf8)!)
     }
-    
     
     func updateStringDict() {
         self.stringDict["x"] = "{\"x\": \(String(describing: self.lastValues["x"]! + MyVariables.clutchOffset["x"]!)),"
@@ -185,11 +184,12 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.stringDict["pitch"] = " \"pitch\": \(String(describing: self.lastValues["pitch"]! + MyVariables.clutchOffset["pitch"]!)),"
         self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + MyVariables.clutchOffset["yaw"]!)),"
         self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
+        self.stringDict["camera"] = " \"camera\": \"false\","
         self.stringDict["arm"] = " \"arm\": \"left\"}"
     }
     
     func sendTransformationSliderLeft(_ session: ARSession) {
-        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"arm\": \"left\"}").data(using: .utf8)!)
+        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"camera\": \"false\"," + " \"arm\": \"left\"}").data(using: .utf8)!)
     }
 
     
