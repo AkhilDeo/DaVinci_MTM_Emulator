@@ -8,6 +8,8 @@ Main view controller for the AR experience.
 import UIKit
 import SceneKit
 import ARKit
+import Foundation
+
 
 class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var ip_address: String
@@ -37,6 +39,7 @@ class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             MyVariables.ip_address = self.ip_address
             MyVariables.network = UDPClient(address: ip_address, port: 8080)
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PSMRight")
+            nextViewController.modalPresentationStyle = .fullScreen
             self.present(nextViewController, animated:true, completion:nil)
         }
         
@@ -50,9 +53,12 @@ class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             MyVariables.ip_address = self.ip_address
             MyVariables.network = UDPClient(address: ip_address, port: 8080)
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PSMLeft")
+            nextViewController.modalPresentationStyle = .fullScreen
             self.present(nextViewController, animated:true, completion:nil)
         }
         
     }
     
 }
+
+

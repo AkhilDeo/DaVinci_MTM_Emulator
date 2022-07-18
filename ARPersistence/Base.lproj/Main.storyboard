@@ -76,7 +76,7 @@
                                 </connections>
                             </button>
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lVB-24-VNJ">
-                                <rect key="frame" x="192" y="198" width="206" height="38"/>
+                                <rect key="frame" x="192" y="198.5" width="206" height="38"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dop-pt-EhP">
                                     <rect key="frame" x="0.0" y="0.0" width="206" height="38"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -106,9 +106,9 @@
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uZF-S8-SMn" userLabel="Mapping Status View">
-                                <rect key="frame" x="160" y="60" width="94" height="97.5"/>
+                                <rect key="frame" x="160" y="60" width="94" height="98"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uqy-xA-7xQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="97.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="94" height="98"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mapping: Limited Tracking: Initializing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aD6-EU-VHg">
@@ -378,11 +378,11 @@
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5qP-eZ-P98" userLabel="Mapping Status View">
                                 <rect key="frame" x="160" y="60" width="93.5" height="97.5"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="3uc-VU-Rcg">
-                                    <rect key="frame" x="0.0" y="0.0" width="93.5" height="97.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="94" height="97"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mapping: Limited Tracking: Initializing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7M-Jt-wru">
-                                            <rect key="frame" x="8" y="8" width="77.5" height="81.5"/>
+                                            <rect key="frame" x="8" y="8" width="78" height="81"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -414,7 +414,7 @@
                                 </constraints>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jh4-zQ-AsN" customClass="RoundedButton" customModule="ARPersistence" customModuleProvider="target">
-                                <rect key="frame" x="229" y="381" width="132" height="82"/>
+                                <rect key="frame" x="229" y="381" width="131.5" height="82"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="82" id="315-dg-Eww"/>
                                 </constraints>
@@ -442,7 +442,7 @@
                                 </connections>
                             </button>
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZI0-wt-ttH">
-                                <rect key="frame" x="115" y="776" width="184" height="38"/>
+                                <rect key="frame" x="114.5" y="776" width="184" height="38"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uUx-Yu-gc0">
                                     <rect key="frame" x="0.0" y="0.0" width="184" height="38"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

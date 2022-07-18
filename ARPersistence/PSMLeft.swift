@@ -305,3 +305,10 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sessionInfoView.isHidden = message.isEmpty
     }
 }
+
+
+extension PSMLeft {
+    @IBAction func cancelPSMLeft(_ segue: UIStoryboardSegue) {
+        
+    }
+}

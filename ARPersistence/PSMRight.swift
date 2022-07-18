@@ -315,3 +315,9 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
 
 }
+
+extension PSMRight {
+    @IBAction func cancelPSMRight(_ segue: UIStoryboardSegue) {
+        
+    }
+}
