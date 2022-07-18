@@ -10,7 +10,6 @@ import SceneKit
 import ARKit
 
 class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
-    var ip_address: String
     @IBOutlet weak var ipAddressInput: UITextField!
     @IBOutlet weak var leftPSMControllerButton: UIButton!
     @IBOutlet weak var rightPSMControllerButton: UIButton!
@@ -21,21 +20,20 @@ class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
  
     
     init() {
-        self.ip_address = ""
+        ip_address = ""
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
-        self.ip_address = "227.215.14.176"
+        ip_address = "227.215.14.176"
        super.init(coder: aDecoder)
     }
     
     @IBAction func goToRightController(_ sender: UIButton) {
         
         if ipAddressInput.text != "" && ip.isValidIPAddress(ipAddressInput.text!) {
-            self.ip_address = ipAddressInput.text ?? "227.215.14.176"
-            MyVariables.ip_address = self.ip_address
-            MyVariables.network = UDPClient(address: ip_address, port: 8080)
+            ip_address = ipAddressInput.text ?? "227.215.14.176"
+            network = UDPClient(address: ip_address, port: 8080)!
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PSMRight")
             self.present(nextViewController, animated:true, completion:nil)
         }
@@ -46,9 +44,8 @@ class ContentView: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBAction func goToLeftController(_ sender: UIButton) {
         
         if ipAddressInput.text != "" && ip.isValidIPAddress(ipAddressInput.text!) {
-            self.ip_address = ipAddressInput.text ?? "227.215.14.176"
-            MyVariables.ip_address = self.ip_address
-            MyVariables.network = UDPClient(address: ip_address, port: 8080)
+            ip_address = ipAddressInput.text ?? "227.215.14.176"
+            network = UDPClient(address: ip_address, port: 8080)!
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PSMLeft")
             self.present(nextViewController, animated:true, completion:nil)
         }
