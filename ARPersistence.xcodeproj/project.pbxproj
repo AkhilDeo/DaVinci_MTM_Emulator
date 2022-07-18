@@ -20,6 +20,7 @@
 		9E17A530286AB095009016B5 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E17A52F286AB095009016B5 /* HelperFunctions.swift */; };
 		9E312048286215AE00FB27EC /* PSMRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E312047286215AE00FB27EC /* PSMRight.swift */; };
 		9E31204A286216DD00FB27EC /* PSMLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E312049286216DD00FB27EC /* PSMLeft.swift */; };
+		9E31204C2862172100FB27EC /* MyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31204B2862172100FB27EC /* MyVariables.swift */; };
 		9E45031C2806813F0073014B /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E45031B2806813F0073014B /* UDPClient.swift */; };
 		9E45031E280688460073014B /* VerticalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E45031D280688460073014B /* VerticalSlider.swift */; };
 		9EFC8859280CCB9B00DF867F /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EFC8858280CCB9B00DF867F /* ExternalAccessory.framework */; };
@@ -43,6 +44,7 @@
 		9E17A52F286AB095009016B5 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		9E312047286215AE00FB27EC /* PSMRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSMRight.swift; sourceTree = "<group>"; };
 		9E312049286216DD00FB27EC /* PSMLeft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSMLeft.swift; sourceTree = "<group>"; };
+		9E31204B2862172100FB27EC /* MyVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVariables.swift; sourceTree = "<group>"; };
 		9E45031B2806813F0073014B /* UDPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClient.swift; sourceTree = "<group>"; };
 		9E45031D280688460073014B /* VerticalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalSlider.swift; sourceTree = "<group>"; };
 		9EFC8856280CCB9200DF867F /* ARPersistence.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ARPersistence.entitlements; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				842316E31F2030C300D189D1 /* ViewController.swift */,
 				9E312049286216DD00FB27EC /* PSMLeft.swift */,
 				9E312047286215AE00FB27EC /* PSMRight.swift */,
+				9E31204B2862172100FB27EC /* MyVariables.swift */,
 				9E17A52F286AB095009016B5 /* HelperFunctions.swift */,
 				9EFC885C2811063500DF867F /* IPAddress.swift */,
 				9E45031B2806813F0073014B /* UDPClient.swift */,
@@ -212,6 +215,7 @@
 				5CB92B4F20D852B0004D38D8 /* SnapshotAnchor.swift in Sources */,
 				9EFC885D2811063500DF867F /* IPAddress.swift in Sources */,
 				9E17A530286AB095009016B5 /* HelperFunctions.swift in Sources */,
+				9E31204C2862172100FB27EC /* MyVariables.swift in Sources */,
 				111DC86920ACAB690037F7B1 /* RoundedButton.swift in Sources */,
 				842316E41F2030C300D189D1 /* ViewController.swift in Sources */,
 				9E312048286215AE00FB27EC /* PSMRight.swift in Sources */,

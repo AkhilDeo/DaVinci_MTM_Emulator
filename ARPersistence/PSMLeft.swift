@@ -24,11 +24,14 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBOutlet weak var clutchButton: RoundedButton!
     var isClutchBtnPressed: Bool
     var isCameraBtnPressed: Bool
+    var network: UDPClient
+    var ip_address: String
     var sendTransform: String
     var stringDict: Dictionary<String, String>
     var lastValues: Dictionary<String, Float>
     var curValues: Dictionary<String, Float>
     
+    // for ecm,  joint 1 controls yaw, joint 2 controls pitch, joint 3 controls insertion, and joint 4 controls the roll
     @IBAction func cameraBtnPressed(_ sender: Any) {
         self.isCameraBtnPressed = true
     }
@@ -46,8 +49,35 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.isClutchBtnPressed = false
         clutchOffsetCalculation(lastValues, curValues)
     }
+    
+    init(ip_address: String) {
+        self.ip_address = MyVariables.ip_address
+        self.network = MyVariables.network!
+        self.isClutchBtnPressed = false
+        self.isCameraBtnPressed = false
+        self.sendTransform = ""
+        self.stringDict = ["x": "",
+                      "y": "",
+                      "z": "",
+                      "roll": "",
+                      "pitch": "",
+                      "yaw": "",
+                      "slider": "",
+                      "arm": ""]
+        self.lastValues = ["x": 0.0,
+                             "y": 0.0,
+                             "z": 0.0,
+                             "roll": 0.0,
+                             "pitch": 0.0,
+                             "yaw": 0.0 ]
+        self.curValues = self.lastValues
+        super.init(nibName: nil, bundle: nil)
+    }
+
 
     required init?(coder aDecoder: NSCoder) {
+        self.ip_address = MyVariables.ip_address
+        self.network = MyVariables.network!
         self.isClutchBtnPressed = false
         self.isCameraBtnPressed = false
         self.sendTransform = ""
@@ -143,23 +173,23 @@ class PSMLeft: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         updateValues(session, &lastValues)
         updateStringDict()
         self.sendTransform = (stringDict["x"]! + stringDict["y"]! + stringDict["z"]! + stringDict["roll"]! + stringDict["pitch"]! + stringDict["yaw"]! + stringDict["slider"]! + stringDict["camera"]! + stringDict["arm"]!)
-        network!.send(sendTransform.data(using: .utf8)!)
+        self.network.send(sendTransform.data(using: .utf8)!)
     }
     
     func updateStringDict() {
-        self.stringDict["x"] = "{\"x\": \(String(describing: self.lastValues["x"]! + clutchOffset["x"]!)),"
-        self.stringDict["y"] = " \"y\": \(String(describing: self.lastValues["y"]! + clutchOffset["y"]!)),"
-        self.stringDict["z"] = " \"z\": \(String(describing: self.lastValues["z"]! + clutchOffset["z"]!)),"
-        self.stringDict["roll"] = " \"roll\": \(String(describing: self.lastValues["roll"]! + clutchOffset["roll"]!)),"
-        self.stringDict["pitch"] = " \"pitch\": \(String(describing: self.lastValues["pitch"]! + clutchOffset["pitch"]!)),"
-        self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + clutchOffset["yaw"]!)),"
+        self.stringDict["x"] = "{\"x\": \(String(describing: self.lastValues["x"]! + MyVariables.clutchOffset["x"]!)),"
+        self.stringDict["y"] = " \"y\": \(String(describing: self.lastValues["y"]! + MyVariables.clutchOffset["y"]!)),"
+        self.stringDict["z"] = " \"z\": \(String(describing: self.lastValues["z"]! + MyVariables.clutchOffset["z"]!)),"
+        self.stringDict["roll"] = " \"roll\": \(String(describing: self.lastValues["roll"]! + MyVariables.clutchOffset["roll"]!)),"
+        self.stringDict["pitch"] = " \"pitch\": \(String(describing: self.lastValues["pitch"]! + MyVariables.clutchOffset["pitch"]!)),"
+        self.stringDict["yaw"] = " \"yaw\": \(String(describing: self.lastValues["yaw"]! + MyVariables.clutchOffset["yaw"]!)),"
         self.stringDict["slider"] = " \"slider\": \(String(describing: gripperSlider.value)),"
         self.stringDict["camera"] = " \"camera\": \"false\","
         self.stringDict["arm"] = " \"arm\": \"left\"}"
     }
     
     func sendTransformationSliderLeft(_ session: ARSession) {
-        network!.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"camera\": \"false\"," + " \"arm\": \"left\"}").data(using: .utf8)!)
+        self.network.send(("{\"slider\":  \(String(describing: gripperSlider.value))," + " \"camera\": \"false\"," + " \"arm\": \"left\"}").data(using: .utf8)!)
     }
 
     

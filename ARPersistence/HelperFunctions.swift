@@ -15,29 +15,20 @@ var insertString: String = ""
 var rollString: String = ""
 var insertVal: Float = 0.0
 let cameraString: String = " \"camera\": \"true\"}"
-var ip_address = "0.0.0.0"
-var network: UDPClient? = nil
-var camera_jp: Array<Float> = [0.0, 0.0, 0.0, 0.0]
-var clutchOffset: Dictionary<String, Float> = ["x": 0.0,
-                                                      "y": 0.0,
-                                                       "z": 0.0,
-                                                      "roll": 0.0,
-                                                      "pitch": 0.0,
-                                                      "yaw": 0.0 ]
 
-// for ecm,  joint 1 controls yaw, joint 2 controls pitch, joint 3 controls inser3tion, and joint 4 controls the roll
+// for ecm,  joint 1 controls yaw, joint 2 controls pitch, joint 3 controls insertion, and joint 4 controls the roll
 func sendCameraTransformation(_ priorCurValues: Dictionary<String, Float>, _ curValues: Dictionary<String, Float>) {
     if (anglePermissible(priorCurValues, curValues)) {
-        camera_jp[0] += (curValues["yaw"]! - priorCurValues["yaw"]!)
-        camera_jp[1] += (curValues["pitch"]! - priorCurValues["pitch"]!)
-        camera_jp[2] += distance(priorCurValues, curValues)
-        camera_jp[3] += (curValues["roll"]! - priorCurValues["roll"]!)
+        MyVariables.camera_jp[0] += (curValues["yaw"]! - priorCurValues["yaw"]!)
+        MyVariables.camera_jp[1] += (curValues["pitch"]! - priorCurValues["pitch"]!)
+        MyVariables.camera_jp[2] += distance(priorCurValues, curValues)
+        MyVariables.camera_jp[3] += (curValues["roll"]! - priorCurValues["roll"]!)
         
-        rollString = "{\"roll\": \(String(describing: camera_jp[3])),"
-        pitchString = " \"pitch\": \(String(describing: camera_jp[1])),"
-        yawString = " \"yaw\": \(String(describing: camera_jp[0])),"
-        insertString = " \"insert\": \(String(describing: camera_jp[2])),"
-        network!.send((rollString + pitchString + yawString + insertString + cameraString).data(using: .utf8)!)
+        rollString = "{\"roll\": \(String(describing: MyVariables.camera_jp[3])),"
+        pitchString = " \"pitch\": \(String(describing: MyVariables.camera_jp[1])),"
+        yawString = " \"yaw\": \(String(describing: MyVariables.camera_jp[0])),"
+        insertString = " \"insert\": \(String(describing: MyVariables.camera_jp[2])),"
+        MyVariables.network!.send((rollString + pitchString + yawString + insertString + cameraString).data(using: .utf8)!)
     }
     
 }
@@ -61,12 +52,12 @@ func distance(_ priorCurValues: Dictionary<String, Float>, _ curValues: Dictiona
 }
 
 func clutchOffsetCalculation(_ lastValues: Dictionary<String, Float>, _ curValues: Dictionary<String, Float>) {
-    clutchOffset["x"]! += (lastValues["x"]! - curValues["x"]!)
-    clutchOffset["y"]! += (lastValues["y"]! - curValues["y"]!)
-    clutchOffset["z"]! += (lastValues["z"]! - curValues["z"]!)
-    clutchOffset["roll"]! += (lastValues["roll"]! - curValues["roll"]!)
-    clutchOffset["pitch"]! += (lastValues["pitch"]! - curValues["pitch"]!)
-    clutchOffset["yaw"]! += (lastValues["yaw"]! - curValues["yaw"]!)
+    MyVariables.clutchOffset["x"]! += (lastValues["x"]! - curValues["x"]!)
+    MyVariables.clutchOffset["y"]! += (lastValues["y"]! - curValues["y"]!)
+    MyVariables.clutchOffset["z"]! += (lastValues["z"]! - curValues["z"]!)
+    MyVariables.clutchOffset["roll"]! += (lastValues["roll"]! - curValues["roll"]!)
+    MyVariables.clutchOffset["pitch"]! += (lastValues["pitch"]! - curValues["pitch"]!)
+    MyVariables.clutchOffset["yaw"]! += (lastValues["yaw"]! - curValues["yaw"]!)
 }
 
 func updateValues(_ session: ARSession, _ values: inout Dictionary<String, Float>) {
