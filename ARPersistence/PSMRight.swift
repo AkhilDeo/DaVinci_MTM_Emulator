@@ -37,13 +37,10 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBAction func cameraBtnPressed(_ sender: Any) {
         self.isCameraBtnPressed = true
-        print("Camera pressed")
     }
     
     @IBAction func cameraBtnReleased(_ sender: Any) {
         self.isCameraBtnPressed = false
-        print("Camera released")
-
     }
     
     @IBAction func clutchBtnPressed(_ sender: Any) {
@@ -208,11 +205,9 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         case .extending, .mapped:
             if (isCameraBtnPressed) {
                 priorCurValues = curValues
-                //updateCurValues(session)
                 updateValues(session, &(self.curValues))
                 sendCameraTransformation(priorCurValues, curValues)
             } else {
-                //updateCurValues(session)
                 updateValues(session, &(self.curValues))
                 if (!isClutchBtnPressed) {
                     sendTransformationRight(session)
@@ -314,10 +309,4 @@ class PSMRight: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sessionInfoView.isHidden = message.isEmpty
     }
 
-}
-
-extension PSMRight {
-    @IBAction func cancelPSMRight(_ segue: UIStoryboardSegue) {
-        
-    }
 }
